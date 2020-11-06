@@ -1,0 +1,87 @@
+<div  style="color: #8097B2">
+  <div class="topBox">
+    <span class="cafeName" style="text-transform: capitalize">{{ cafeName }}</span>
+    <br/>
+  </div>
+
+  <div style="width: 100%;height: 20%;" *ngIf="showimage">
+    <img [src]="imgSrc"
+         style="max-width:100%;max-height:auto;">
+
+  </div>
+
+  <div style="width: 100%;height: 30px;left: 0px;background: #422039;" *ngIf="detailsObtained">
+    <span style="margin-left: 3%;margin-top: 5px;color: white;font-size: 18px;font-weight: bold"> Menu</span>
+    <i-bs name="filter" style="color: white;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="clickFilter()"></i-bs>
+  </div>
+  <!-- The Modal -->
+  <div id="myModal" class="modal" *ngIf="openFilter">
+    <i-bs name="X" style="color: black;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="closeFilter()"></i-bs>
+    <!--      <span (click)="closeFilter()" class="cafeName" style="text-transform: capitalize">Close X</span>-->
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div *ngFor="let cat of categories">
+        <p (click)="filterCat(cat)" style="font-size: 14px;cursor: pointer">{{cat | titlecase }}</p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div *ngIf="!detailsObtained" style="height: 400px">
+    <p>Please provide the following details to help stop the spread of Covid-19</p>
+
+    <div style="height: 200px">
+    <div style="height: 60px" class="md-form">
+    <p style="height: 20px">Name </p>
+      <input mdbInput type="vName" name="vName" [(ngModel)]="vName" id="form1" class="form-control">
+    </div>
+
+      <div style="height: 60px" class="md-form">
+        <p style="height: 20px">Email </p>
+      <input mdbInput type="vEmail" name="vEmail" [(ngModel)]="vEmail" id="form2" class="form-control">
+    </div>
+
+      <div style="height: 60px" class="md-form">
+        <p style="height: 20px">Best Contact Number </p>
+      <input mdbInput type="vPhone" name="vPhone" [(ngModel)]="vPhone" id="form3" class="form-control">
+    </div>
+    </div>
+    <p style="height: 10px"> </p>
+  <div >
+    <button (click)="fetchCovidTracingDetails(1)" style="width: 100px;height:30px;background-color: #422039;color: white;border-radius: 10px">Submit</button>
+    <button (click)="fetchCovidTracingDetails(0)" style="width: 100px;height:30px;background-color: grey;border-radius: 10px">Cancel</button>
+    </div>
+  </div>
+
+  <div  style="" *ngIf="detailsObtained">
+    <div *ngFor="let menu of menuDisplay; let i = index" style="margin-top: 20px;">
+      <div  orientation="horizontal"  class="{{ i%2==0 ? 'evenStyle' : 'oddStyle' }}">
+
+        <div>
+        <div style=" margin-left: 5px;font-weight: bold;font-size: 18px;display: inline-block;width: 70%" >
+          <span > {{menu.name | titlecase}}</span>
+          <br/>
+        </div>
+          <p style="display: inline-block">{{menu.price | currency:currency:'symbol'}}</p>
+        </div>
+
+        <div style=" margin-left: 5px;width:50%;font-weight: bold;font-size: 14px" >
+          <span > {{menu.category | titlecase}}</span>
+          <br/>
+        </div>
+
+
+        <div style=" margin-left: 5px;width:80%;font-size: 14px" *ngIf="menu.description">
+          <br/>
+          <span >  {{menu.description | titlecase }}</span>
+
+        </div>
+        <br/>
+      </div>
+    </div>
+  </div>
+</div>
+
+

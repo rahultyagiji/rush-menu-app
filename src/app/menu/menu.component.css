@@ -1,0 +1,63 @@
+.topBox{
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  left: 0px;
+  top: 0px;
+  background: #F2F2F0;
+}
+.cafeName{
+  position: absolute;
+  width: 100%;
+  height: 30.29px;
+  top: 13.88px;
+  font-weight: bold;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  letter-spacing: 0.01em;
+
+  color: #422039;
+}
+
+
+.evenStyle{
+  width: 90%;
+  margin-left: 5%;
+  border-radius: 5px;
+}
+
+
+.oddStyle{
+  width: 90%;
+  margin-left: 5%;
+  background: #F2F2F0;
+  border-radius: 5px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 10px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
