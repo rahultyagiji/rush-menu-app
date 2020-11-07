@@ -29,7 +29,7 @@
   </div>
 
 
-  <div *ngIf="!detailsObtained" style="height: 400px">
+  <div *ngIf="false" style="height: 400px">
     <p>Please provide the following details to help stop the spread of Covid-19</p>
 
     <div style="height: 200px">
@@ -55,7 +55,7 @@
     </div>
   </div>
 
-  <div  style="" *ngIf="detailsObtained">
+  <div  style="" *ngIf="!detailsObtained">
     <div *ngFor="let menu of menuDisplay; let i = index" style="margin-top: 20px;">
       <div  orientation="horizontal"  class="{{ i%2==0 ? 'evenStyle' : 'oddStyle' }}">
 

@@ -128,9 +128,9 @@ export class MenuComponent implements OnInit {
       this.detailsObtained = true;
       console.log(firebase.firestore.FieldValue.serverTimestamp())
      this.fb.list('xcovidContactInfo').push(
-       {"name":document.getElementById('form1').value,
-        "email":document.getElementById('form2').value,
-         "phone":document.getElementById('form3').value,
+       {"name":<HTMLInputElement>document.getElementById('form1').value,
+        "email":<HTMLInputElement>document.getElementById('form2').value,
+         "phone":<HTMLInputElement>document.getElementById('form3').value,
          "cafeId":this.cafe,
          "timeStamp":firebase.firestore.Timestamp.now()
        })
