@@ -10,7 +10,8 @@ import { Observable } from 'rxjs';
 import {AngularFireDatabase} from '@angular/fire/database';
 
 import {Item} from '../datatypes/item';
-import {FirebaseDatabase} from '@angular/fire';
+import {MatDialog, MatDialogConfig} from '@angular/material/material';
+import { ModalComponent } from './components/modal/modal.component';
 
 
 @Component({
@@ -44,7 +45,8 @@ export class MenuComponent implements OnInit {
   items: Observable<any[]>;
 
   constructor(public route: ActivatedRoute,
-              public fb: AngularFireDatabase) {
+              public fb: AngularFireDatabase,
+              public matDialog: MatDialog) {
 
   }
 
@@ -69,9 +71,9 @@ export class MenuComponent implements OnInit {
         const ref = '/menu/' + params['id']
 
         this.fb.list('businessName',ref => ref.orderByChild('cafeId').equalTo(this.cafe))
-          .valueChanges().subscribe((res)=>{
+          .valueChanges().subscribe((res:Item[])=>{
             this.cafeName=res[0].name
-          this.imgSrc =res[0].imgSrc
+            this.imgSrc =res[0].imgSrc
           })
 
         this.fb.list<Menu>(ref).valueChanges().subscribe((res) => {
@@ -126,7 +128,6 @@ export class MenuComponent implements OnInit {
 
     if(response==1) {
       this.detailsObtained = true;
-      console.log(firebase.firestore.FieldValue.serverTimestamp())
      this.fb.list('xcovidContactInfo').push(
        {"name":<HTMLInputElement>document.getElementById('form1').value,
         "email":<HTMLInputElement>document.getElementById('form2').value,
@@ -139,6 +140,21 @@ export class MenuComponent implements OnInit {
       this.detailsObtained=true;
     }
   }
+
+
+  onTapMenuItem(i){
+    this.openModal()
+  }
+    openModal() {
+      const dialogConfig = new MatDialogConfig();
+      // The user can't close the dialog by clicking outside its body
+      dialogConfig.disableClose = true;
+      dialogConfig.id = "modal-component";
+      dialogConfig.height = "350px";
+      dialogConfig.width = "600px";
+      // https://material.angular.io/components/dialog/overview
+      const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
+    }
 
 }
 

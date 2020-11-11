@@ -1,4 +1,4 @@
-<div  style="color: #8097B2">
+<div  style="color: #422039">
   <div class="topBox">
     <span class="cafeName" style="text-transform: capitalize">{{ cafeName }}</span>
     <br/>
@@ -28,7 +28,7 @@
 
   </div>
 
-
+<!--covid info-->
   <div *ngIf="false" style="height: 400px">
     <p>Please provide the following details to help stop the spread of Covid-19</p>
 
@@ -55,25 +55,26 @@
     </div>
   </div>
 
+
   <div  style="" *ngIf="!detailsObtained">
     <div *ngFor="let menu of menuDisplay; let i = index" style="margin-top: 20px;">
       <div  orientation="horizontal"  class="{{ i%2==0 ? 'evenStyle' : 'oddStyle' }}">
 
-        <div>
-        <div style=" margin-left: 5px;font-weight: bold;font-size: 18px;display: inline-block;width: 70%" >
+        <div (click)="onTapMenuItem(i)">
+        <div style=" margin-left: 5px;font-weight: bold;font-size: 18px;display: inline-block;width: 70%" (click)="onTapMenuItem(i)">
           <span > {{menu.name | titlecase}}</span>
           <br/>
         </div>
-          <p style="display: inline-block">{{menu.price | currency:currency:'symbol'}}</p>
+          <p style="display: inline-block" (click)="onTapMenuItem(i)">{{menu.price | currency:currency:'symbol'}}</p>
         </div>
 
-        <div style=" margin-left: 5px;width:50%;font-weight: bold;font-size: 14px" >
+        <div style=" margin-left: 5px;width:50%;font-weight: bold;font-size: 14px" (click)="onTapMenuItem(i)">
           <span > {{menu.category | titlecase}}</span>
           <br/>
         </div>
 
 
-        <div style=" margin-left: 5px;width:80%;font-size: 14px" *ngIf="menu.description">
+        <div style=" margin-left: 5px;width:80%;font-size: 14px" *ngIf="menu.description" (click)="onTapMenuItem(i)">
           <br/>
           <span >  {{menu.description | titlecase }}</span>
 

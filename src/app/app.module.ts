@@ -16,6 +16,7 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {FormsModule} from '@angular/forms';
+import { ComponentsmodalMenuComponent } from './componentsmodal-menu/componentsmodal-menu.component';
 const icons = {
   Alarm,
   Filter,
@@ -25,7 +26,8 @@ const icons = {
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent
+    MenuComponent,
+    ComponentsmodalMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +39,7 @@ const icons = {
     FormsModule
   ],
   providers: [AngularFirestore],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ComponentsmodalMenuComponent]
 })
 export class AppModule { }
