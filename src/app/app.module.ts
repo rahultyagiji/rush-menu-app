@@ -17,6 +17,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {FormsModule} from '@angular/forms';
 import { ComponentsmodalMenuComponent } from './componentsmodal-menu/componentsmodal-menu.component';
+import {MatDialogModule,MatDialogRef} from '@angular/material/dialog';
 const icons = {
   Alarm,
   Filter,
@@ -36,10 +37,13 @@ const icons = {
     NgxBootstrapIconsModule.pick(icons),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule
   ],
-  providers: [AngularFirestore],
+  providers: [AngularFirestore,    {
+    provide: MatDialogRef,
+    useValue: {}}],
   bootstrap: [AppComponent],
-  entryComponents: [ComponentsmodalMenuComponent]
+  entryComponents:[ComponentsmodalMenuComponent]
 })
 export class AppModule { }

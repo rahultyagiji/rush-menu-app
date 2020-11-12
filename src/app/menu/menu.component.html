@@ -10,7 +10,7 @@
 
   </div>
 
-  <div style="width: 100%;height: 30px;left: 0px;background: #422039;" *ngIf="detailsObtained">
+  <div style="width: 100%;height: 30px;left: 0px;background: #422039;" >
     <span style="margin-left: 3%;margin-top: 5px;color: white;font-size: 18px;font-weight: bold"> Menu</span>
     <i-bs name="filter" style="color: white;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="clickFilter()"></i-bs>
   </div>
@@ -60,21 +60,21 @@
     <div *ngFor="let menu of menuDisplay; let i = index" style="margin-top: 20px;">
       <div  orientation="horizontal"  class="{{ i%2==0 ? 'evenStyle' : 'oddStyle' }}">
 
-        <div (click)="onTapMenuItem(i)">
-        <div style=" margin-left: 5px;font-weight: bold;font-size: 18px;display: inline-block;width: 70%" (click)="onTapMenuItem(i)">
+        <div (click)="openModal(i)">
+        <div style=" margin-left: 5px;font-weight: bold;font-size: 18px;display: inline-block;width: 70%" (click)="openModal(i)">
           <span > {{menu.name | titlecase}}</span>
           <br/>
         </div>
-          <p style="display: inline-block" (click)="onTapMenuItem(i)">{{menu.price | currency:currency:'symbol'}}</p>
+          <p style="display: inline-block" (click)="openModal(i)">{{menu.price | currency:currency:'symbol'}}</p>
         </div>
 
-        <div style=" margin-left: 5px;width:50%;font-weight: bold;font-size: 14px" (click)="onTapMenuItem(i)">
+        <div style=" margin-left: 5px;width:50%;font-weight: bold;font-size: 14px" (click)="openModal(i)">
           <span > {{menu.category | titlecase}}</span>
           <br/>
         </div>
 
 
-        <div style=" margin-left: 5px;width:80%;font-size: 14px" *ngIf="menu.description" (click)="onTapMenuItem(i)">
+        <div style=" margin-left: 5px;width:80%;font-size: 14px" *ngIf="menu.description" (click)="openModal(i)">
           <br/>
           <span >  {{menu.description | titlecase }}</span>
 
@@ -82,7 +82,14 @@
         <br/>
       </div>
     </div>
+
+    <div class="footer" class="footer" *ngIf="cart.length!=0" (click)="onClickCart()">
+      <p style="display: inline-block;width: 20%;padding-left: 10px">$100</p>
+      <p style="display: inline-block;text-align: right;width: 70%;padding-right: 10px">Continue to Cart</p>
+    </div>
+
   </div>
+
 </div>
 
 

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 // import data from "../../assets/data.json";
 import {Menu} from "../datatypes/menu";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -10,8 +10,8 @@ import { Observable } from 'rxjs';
 import {AngularFireDatabase} from '@angular/fire/database';
 
 import {Item} from '../datatypes/item';
-import {MatDialog, MatDialogConfig} from '@angular/material/material';
-import { ModalComponent } from './components/modal/modal.component';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {ComponentsmodalMenuComponent} from '../componentsmodal-menu/componentsmodal-menu.component';
 
 
 @Component({
@@ -26,6 +26,7 @@ export class MenuComponent implements OnInit {
   public menu:Menu[]=[]
   public cafeInfo:Item
   public menuDisplay:Menu[]=[]
+  public cart:Menu[]=[];
   public selectedMenu:Menu;
   public categories:string[]=["All"];
   public openFilter:boolean=false;
@@ -34,6 +35,7 @@ export class MenuComponent implements OnInit {
   public vName:string=""
   public vEmail:string=""
   public vPhone:string=""
+
 
   //screen size
   isMobile: boolean = false;
@@ -45,6 +47,7 @@ export class MenuComponent implements OnInit {
   items: Observable<any[]>;
 
   constructor(public route: ActivatedRoute,
+              public router:Router,
               public fb: AngularFireDatabase,
               public matDialog: MatDialog) {
 
@@ -142,19 +145,40 @@ export class MenuComponent implements OnInit {
   }
 
 
-  onTapMenuItem(i){
-    this.openModal()
-  }
-    openModal() {
-      const dialogConfig = new MatDialogConfig();
-      // The user can't close the dialog by clicking outside its body
-      dialogConfig.disableClose = true;
-      dialogConfig.id = "modal-component";
-      dialogConfig.height = "350px";
-      dialogConfig.width = "600px";
-      // https://material.angular.io/components/dialog/overview
-      const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
+  openModal(i) {
+  //   this.router.navigate(["option-pop"])
+  // }
+
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.id = 'modal-component';
+    dialogConfig.backdropClass = 'class-backdrop';
+    dialogConfig.width = this.width.toString()
+    dialogConfig.maxWidth = this.width,
+    dialogConfig.maxHeight = '500px',
+      dialogConfig.position = {
+    left: '20%',
+    top: '0%'
+      }
+      dialogConfig.position = {
+      'top':'10px'
+      }
+    dialogConfig.data = {
+      menu:this.menuDisplay[i]
     }
+    const modalDialog = this.matDialog.open(ComponentsmodalMenuComponent, dialogConfig)
+
+    modalDialog.beforeClosed().subscribe(result => {
+      if(result=='1'){
+        this.cart.push(this.menuDisplay[i])
+        console.log(this.cart)
+      }
+    });
+  }
+  onClickCart(){
+    console.log("navigate to confirm page")
+  }
 
 }
 

@@ -61,3 +61,17 @@
   border: 1px solid #888;
   width: 80%;
 }
+
+.class-backdrop{
+  filter: blur(20px);
+  opacity: 0.1 }
+
+
+.footer {
+  height:50px;
+  background-color: #E12842;
+  color: #F2F2F0;
+  width:100%;
+  position: fixed;
+  bottom: 0px;
+}
