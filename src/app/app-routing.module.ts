@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {MenuComponent} from './menu/menu.component';
 import {AppComponent} from './app.component';
 import {ComponentsmodalMenuComponent} from './componentsmodal-menu/componentsmodal-menu.component';
+import {OrderComponent} from './order/order.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: "option-pop",
     component: ComponentsmodalMenuComponent
+  },
+  {
+    path: "order",
+    component: OrderComponent
   },
 ];
 @NgModule({

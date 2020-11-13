@@ -83,9 +83,9 @@
       </div>
     </div>
 
-    <div class="footer" class="footer" *ngIf="cart.length!=0" (click)="onClickCart()">
-      <p style="display: inline-block;width: 20%;padding-left: 10px">$100</p>
-      <p style="display: inline-block;text-align: right;width: 70%;padding-right: 10px">Continue to Cart</p>
+    <div class="footer" class="footer" *ngIf="order.length!=0" (click)="onClickCart()">
+      <p style="display: inline-block;width: 20%;padding-left: 10px">{{discountTotal$ | currency: cafeInfo.currency :'symbol-narrow'}}</p>
+      <p style="display: inline-block;text-align: right;width: 70%;padding-right: 10px">Confirm Order</p>
     </div>
 
   </div>

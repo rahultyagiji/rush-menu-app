@@ -18,6 +18,7 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {FormsModule} from '@angular/forms';
 import { ComponentsmodalMenuComponent } from './componentsmodal-menu/componentsmodal-menu.component';
 import {MatDialogModule,MatDialogRef} from '@angular/material/dialog';
+import { OrderComponent } from './order/order.component';
 const icons = {
   Alarm,
   Filter,
@@ -28,7 +29,8 @@ const icons = {
   declarations: [
     AppComponent,
     MenuComponent,
-    ComponentsmodalMenuComponent
+    ComponentsmodalMenuComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

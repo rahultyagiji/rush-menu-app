@@ -12,6 +12,9 @@ import {AngularFireDatabase} from '@angular/fire/database';
 import {Item} from '../datatypes/item';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ComponentsmodalMenuComponent} from '../componentsmodal-menu/componentsmodal-menu.component';
+import {OrderService} from '../order.service';
+import {Order} from '../datatypes/order';
+import {AppService} from '../app.service';
 
 
 @Component({
@@ -44,12 +47,29 @@ export class MenuComponent implements OnInit {
   mobileWidth:number  = 500;
   currency:string="USD";
 
+  order: Order[] = [];
+  total$: number = 0;
+  discountTotal$: number = 0;
+  itemCount: number = 0;
+
+
   items: Observable<any[]>;
 
   constructor(public route: ActivatedRoute,
               public router:Router,
               public fb: AngularFireDatabase,
-              public matDialog: MatDialog) {
+              public matDialog: MatDialog,
+              public orderService: OrderService,
+              public appService: AppService) {
+
+
+    this.route.params.subscribe(
+      params => {
+        this.cafe = params['id'];
+        this.appService.setCafeIf(params['id']);
+      }
+    );
+
 
   }
 
@@ -58,6 +78,10 @@ export class MenuComponent implements OnInit {
   imgSrc:string=""
 
   ngOnInit() {
+
+
+    if(this.cafe=='')this.cafe = this.appService.getCafeId();
+
     this.width = window.innerWidth
     this.height = window.innerHeight
     this.isMobile = window.innerWidth < window.innerHeight;
@@ -67,25 +91,34 @@ export class MenuComponent implements OnInit {
       this.showimage = true;
     }
 
+    const ref = '/menu/' + this.cafe
+    this.fb.list('businessName',ref => ref.orderByChild('cafeId').equalTo(this.cafe))
+      .valueChanges().subscribe((res:Item[])=>{
+      this.cafeInfo = res[0];
+      this.cafeName=res[0].name
+      this.imgSrc =res[0].imgSrc
+    })
 
-    this.route.params.subscribe(
-      params => {
-        this.cafe = params['id'];
-        const ref = '/menu/' + params['id']
+    this.fb.list<Menu>(ref).valueChanges().subscribe((res) => {
+      this.menu = res.slice()
+      this.menuDisplay = res.slice()
+    })
 
-        this.fb.list('businessName',ref => ref.orderByChild('cafeId').equalTo(this.cafe))
-          .valueChanges().subscribe((res:Item[])=>{
-            this.cafeName=res[0].name
-            this.imgSrc =res[0].imgSrc
-          })
 
-        this.fb.list<Menu>(ref).valueChanges().subscribe((res) => {
-          this.menu = res.slice()
-          this.menuDisplay = res.slice()
-        })
+      setTimeout(()=>{
+        this.orderService.getOrder().subscribe((x) => {
+          this.order = x;
+          if (this.order.length > 0) {
+            let orderCount = 0;
+            for (let i = 0; i < this.order.length; i++) {
+              orderCount = orderCount + this.order[i].quantity;
+            }
+            this.itemCount = orderCount;
+            //this.itemCount=this.order.length;
+            this.totalPrice(x);
+          }})
+      },300)
 
-      }
-    );
 
   }
 
@@ -131,13 +164,13 @@ export class MenuComponent implements OnInit {
 
     if(response==1) {
       this.detailsObtained = true;
-     this.fb.list('xcovidContactInfo').push(
-       {"name":<HTMLInputElement>document.getElementById('form1').value,
-        "email":<HTMLInputElement>document.getElementById('form2').value,
-         "phone":<HTMLInputElement>document.getElementById('form3').value,
-         "cafeId":this.cafe,
-         "timeStamp":firebase.firestore.Timestamp.now()
-       })
+     // this.fb.list('xcovidContactInfo').push(
+     //   {"name":<HTMLInputElement>document.getElementById('form1').value,
+     //    "email":<HTMLInputElement>document.getElementById('form2').value,
+     //     "phone":<HTMLInputElement>document.getElementById('form3').value,
+     //     "cafeId":this.cafe,
+     //     "timeStamp":firebase.firestore.Timestamp.now()
+     //   })
     }
     else{
       this.detailsObtained=true;
@@ -172,13 +205,39 @@ export class MenuComponent implements OnInit {
     modalDialog.beforeClosed().subscribe(result => {
       if(result=='1'){
         this.cart.push(this.menuDisplay[i])
-        console.log(this.cart)
+        //remember to fix quantity later....
+        this.orderService.Order(this.menuDisplay[i], this.cafe, result.specialInstruction, result.option, result.extras, 1, false);
+
+        this.orderService.getOrder().subscribe((x) => {
+          console.log(x);
+          this.order = x;
+          if (this.order.length > 0) {
+
+          }})
+
+        this.totalPrice(this.order);
+        let orderCount = 0;
+        for (let i = 0; i < this.order.length; i++) {
+          orderCount = orderCount + this.order[i].quantity;
+        }
+        this.itemCount = orderCount;
       }
     });
   }
+
   onClickCart(){
-    console.log("navigate to confirm page")
+    this.router.navigate(['order']);
   }
+
+  totalPrice(order: Order[]) {
+    this.total$ = 0;
+    order.forEach((x) => {
+      //for total
+      this.total$ = Math.round((this.total$ + parseFloat(x.priceQuantity)) * 100) / 100;
+    });
+    this.discountTotal$ = Math.round(this.total$ * (1 - this.cafeInfo.discount / 100) * 100) / 100;
+  }
+
 
 }
 
