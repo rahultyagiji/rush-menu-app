@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
+import {Item} from './datatypes/item';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
-cafeId:string=""
+  cafeInfo:Item
   constructor() { }
 
-  setCafeIf(id){
-  this.cafeId=id
+  setCafeInfo(info){
+  this.cafeInfo=info
   }
 
-  getCafeId(){
-  return this.cafeId;
+  getCafeInfo(){
+  return this.cafeInfo;
   }
 }

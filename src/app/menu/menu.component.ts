@@ -66,7 +66,6 @@ export class MenuComponent implements OnInit {
     this.route.params.subscribe(
       params => {
         this.cafe = params['id'];
-        this.appService.setCafeIf(params['id']);
       }
     );
 
@@ -78,9 +77,6 @@ export class MenuComponent implements OnInit {
   imgSrc:string=""
 
   ngOnInit() {
-
-
-    if(this.cafe=='')this.cafe = this.appService.getCafeId();
 
     this.width = window.innerWidth
     this.height = window.innerHeight
@@ -95,6 +91,7 @@ export class MenuComponent implements OnInit {
     this.fb.list('businessName',ref => ref.orderByChild('cafeId').equalTo(this.cafe))
       .valueChanges().subscribe((res:Item[])=>{
       this.cafeInfo = res[0];
+      this.appService.setCafeInfo(this.cafeInfo)
       this.cafeName=res[0].name
       this.imgSrc =res[0].imgSrc
     })
@@ -118,7 +115,6 @@ export class MenuComponent implements OnInit {
             this.totalPrice(x);
           }})
       },300)
-
 
   }
 

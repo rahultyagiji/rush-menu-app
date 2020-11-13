@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {OrderService} from '../order.service';
 import {Order} from '../datatypes/order';
 import {Subscription} from 'rxjs';
+import {AppService} from '../app.service';
+import {Item} from '../datatypes/item';
 
 @Component({
   selector: 'app-order',
@@ -9,6 +11,8 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
+
+  cafeInfo:Item
 
   order:Order[]=[]
   total$: number = 0;
@@ -23,14 +27,20 @@ export class OrderComponent implements OnInit {
 
 
   constructor(
-    public orderService: OrderService
+    public orderService: OrderService,
+    public appService: AppService
   ) { }
 
   ngOnInit(): void {
+
+    this.cafeInfo = this.appService.getCafeInfo();
+
     this.orderSubscription = this.orderService.getOrder().subscribe((x) => {
       this.order = x;
       this.totalPrice(this.order);
     });
+
+
   }
 
   totalPrice(order: Order[]) {
