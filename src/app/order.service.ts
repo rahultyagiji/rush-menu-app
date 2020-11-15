@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Menu} from './datatypes/menu';
 import {Order} from './datatypes/order';
 import {BehaviorSubject} from 'rxjs';
+import {AngularFireDatabase} from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,10 @@ export class OrderService {
 
 
 
-  constructor() {
+  constructor(
+    public fb: AngularFireDatabase,
+
+  ) {
     console.log("service called")
   }
 
@@ -72,6 +76,162 @@ export class OrderService {
       this.price = "0";
       this.priceQuantity = "0";
     }
+
+
+  confirmOrder(order: Order[], cafe, payway, uid, location, totalPrice, discount, curr, arrival, tip, additiveTax, inclusiveTax, address) {
+    if (this.order.length != 0) {
+
+      var time = Math.floor(Date.now() / 1000);
+      var a = this.orderNo();
+      // var dId = this.auth.getDeviceIdHash();
+
+      if (payway == "Cash") {
+
+        this.fb.list('/order-cafe/' + cafe).push(
+          {
+            "print": true,
+            order,
+            "status": "ordered",
+            "uid": uid,
+            "location": location,
+            "orderNo2": a,
+            "timestamp": time,
+            "totalPrice": totalPrice,
+            "paymentBalance": totalPrice,
+            "payway": "Cash",
+            "discount": discount,
+            "currency": curr,
+            "arrivalTime": arrival,
+            "tip": tip,
+            "additiveTax": additiveTax,
+            "inclusiveTax": inclusiveTax,
+            "deliveryDetails": address
+          })
+          .then((res) => {
+            // if (uid == dId) {
+      //         firebase.update('/order-user/' + dId, {
+      //           "status": "ordered",
+      //           "cafe": cafe,
+      //           "orderNo": res.key,
+      //           "orderNo2": a,
+      //           "timestamp": time,
+      //           "payway": "Cash",
+      //           "discount": discount,
+      //           "currency": curr,
+      //           "arrivalTime": arrival
+      //         })
+      //           .then(() => {
+      //               firebase.remove('/cart/' + dId + '/' + cafe);
+      //             }
+      //           )
+      //           .catch(() => {
+      //             //    fix this so that there is no inconsistency between user and cafe tables
+      //           })
+      //       // } else {
+      //     //     firebase.push('/order-user/' + uid, {
+      //     //       "status": "ordered",
+      //     //       "cafe": cafe,
+      //     //       "orderNo": res.key,
+      //     //       "orderNo2": a,
+      //     //       "timestamp": time,
+      //     //       "payway": "Cash",
+      //     //       "discount": discount,
+      //     //       "currency": curr,
+      //     //       "arrivalTime": arrival
+      //     //     })
+      //     //       .then(() => {
+      //     //           firebase.remove('/cart/' + uid + '/' + cafe);
+      //     //
+      //     //         }
+      //     //       )
+      //     //       .catch(() => {
+      //     //         //    fix this so that there is no inconsistency between user and cafe tables
+      //     //       })
+      //     //   }
+      //     // })
+      //     // .catch((err) => {
+      //     // })
+      //
+      // }
+    //   else {
+    //     firebase.push('/order-cafe/' + cafe, {
+    //       "print": true,
+    //       order,
+    //       "status": "ordered",
+    //       "uid": uid,
+    //       "location": location,
+    //       "orderNo2": a,
+    //       "timestamp": time,
+    //       "totalPrice": totalPrice,
+    //       "paymentBalance": 0,
+    //       "payway": "Card",
+    //       "discount": discount,
+    //       "currency": curr,
+    //       "arrivalTime": arrival,
+    //       "tip": tip,
+    //       "additiveTax": additiveTax,
+    //       "inclusiveTax": inclusiveTax,
+    //       "deliveryDetails": address
+    //     })
+    //       .then((res) => {
+    //           if (uid == dId) {
+    //             firebase.update('/order-user/' + dId, {
+    //               "status": "ordered",
+    //               "cafe": cafe,
+    //               "orderNo": res.key,
+    //               "orderNo2": a,
+    //               "timestamp": time,
+    //               "payway": "Card",
+    //               "discount": discount,
+    //               "currency": curr,
+    //               "arrivalTime": arrival
+    //             })
+    //               .then(() => {
+    //                   firebase.remove('/cart/' + dId + '/' + cafe);
+    //                 }
+    //               )
+    //               .catch(() => {
+    //                 //    fix this so that there is no inconsistency between user and cafe tables
+    //               })
+    //           } else {
+    //             firebase.push('/order-user/' + uid, {
+    //               "status": "ordered",
+    //               "cafe": cafe,
+    //               "orderNo": res.key,
+    //               "orderNo2": a,
+    //               "timestamp": time,
+    //               "payway": "Card",
+    //               "discount": discount,
+    //               "currency": curr,
+    //               "arrivalTime": arrival
+    //             })
+    //               .then(() => {
+    //                 firebase.remove('/cart/' + uid + '/' + cafe)
+    //               })
+    //           }
+    //         }
+    //       ).catch((err) => {
+    //       console.log("error is ", err)
+    //     })
+    //   }
+    //   return a;
+    // }
+  })
+      }
+    }
+  }
+
+  orderNo() {
+    var i;
+    var allc = "ABCDEFGHIJKJLMNOPQRSTUVWXYZ";
+    var orderAlphabet = '';
+    for (i = 0; i < 1; i++) {
+      orderAlphabet += allc.charAt(Math.floor(Math.random() * allc.length));
+    }
+    i = 0;
+
+    return orderAlphabet + (Math.floor(Math.random() * (50 - 1 + 1)) + 1).toString();
+  }
 
 
 }

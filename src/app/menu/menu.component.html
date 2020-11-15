@@ -35,17 +35,17 @@
     <div style="height: 200px">
     <div style="height: 60px" class="md-form">
     <p style="height: 20px">Name </p>
-      <input mdbInput type="vName" name="vName" [(ngModel)]="vName" id="form1" class="form-control">
+      <input mdbInput type="text" name="vName" [(ngModel)]="vName" id="form1" class="form-control">
     </div>
 
       <div style="height: 60px" class="md-form">
         <p style="height: 20px">Email </p>
-      <input mdbInput type="vEmail" name="vEmail" [(ngModel)]="vEmail" id="form2" class="form-control">
+      <input mdbInput type="email" name="vEmail" [(ngModel)]="vEmail" id="form2" class="form-control">
     </div>
 
       <div style="height: 60px" class="md-form">
         <p style="height: 20px">Best Contact Number </p>
-      <input mdbInput type="vPhone" name="vPhone" [(ngModel)]="vPhone" id="form3" class="form-control">
+      <input mdbInput type="number" name="vPhone" [(ngModel)]="vPhone" id="form3" class="form-control">
     </div>
     </div>
     <p style="height: 10px"> </p>
@@ -82,7 +82,7 @@
       </div>
     </div>
 
-    <div class="footer" class="footer" *ngIf="order.length!=0" (click)="onClickCart()">
+    <div class="footer"  *ngIf="order.length!=0" (click)="onClickCart()">
       <p style="display: inline-block;width: 20%;padding-left: 10px">{{discountTotal$ | currency: cafeInfo.currency :'symbol-narrow'}}</p>
       <p style="display: inline-block;text-align: right;width: 70%;padding-right: 10px">Confirm Order</p>
     </div>

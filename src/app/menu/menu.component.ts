@@ -194,7 +194,8 @@ export class MenuComponent implements OnInit {
       'top':'10px'
       }
     dialogConfig.data = {
-      menu:this.menuDisplay[i]
+      menu:this.menuDisplay[i],
+      isOnboarded:this.cafeInfo.onboarded
     }
     const modalDialog = this.matDialog.open(ComponentsmodalMenuComponent, dialogConfig)
 

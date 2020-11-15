@@ -5,15 +5,85 @@
   </div>
 
   <div  class="topBox2">
-  <div *ngFor="let ord of order" >
-    <p>{{ord.name}}</p>
+    <div style="height: 200px">
+  <div *ngFor="let ord of order;let i = index">
+    <p style="display: inline-block;width: 5%;padding-left: 10px"> {{ord.quantity}}</p>
+    <p style="display: inline-block;width: 50%;padding-left: 10px">{{ord.name}}</p>
+    <p style="display: inline-block;width: 10%;padding-left: 10px">{{ord.priceQuantity| currency: cafeInfo.currency :'symbol-narrow'}}</p>
+    <p style="display: inline-block;width: 15%;text-align: right;font-size: 30px;color: #E12842" (click)="decreaseQuantity(ord,i)">-</p>
+  </div>
+    <br/>
 
   </div>
+
+    <div style="height: 20px">
+      <p style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: left;font-weight: bold;padding-left: 10%;width: 75%">Total</p>
+      <p  style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: right;font-weight: bold;color:black">
+        {{total$ | currency: cafeInfo.currency :'symbol-narrow'}}
+      </p>
+    </div>
+
+
+    <div *ngIf="cafeInfo.discount!=0"  style="height: 20px">
+      <p style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: left;font-weight: bold;padding-left: 10%;width: 75%">
+        Discount
+      </p>
+      <p  style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: right;font-weight: bold;color:black">{{' - ' +cafeInfo.discount + '%'}}</p>
+    </div>
+
+
+    <div *ngIf="cafeInfo.discount!=0"  style="height: 20px">
+      <p style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: left;font-weight: bold;padding-left: 10%;width: 75%">Sub Total</p>
+      <p style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: right;font-weight: bold;color:black">{{discountTotal$ | currency: cafeInfo.currency :'symbol-narrow'}}</p>
+    </div>
+
+
+    <div  *ngIf="inclusiveTax!='0'"  style="height: 20px">
+      <p  style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: left;font-weight: bold;padding-left: 10%;width: 75%">
+        Tax Included
+      </p>
+      <p style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: right;font-weight: bold;color:black">{{inclusiveTax | currency: cafeInfo.currency :'symbol-narrow'}}</p>
+    </div>
+
+    <div *ngIf="additiveTax!='0'"  style="height: 20px">
+      <p  style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: left;font-weight: bold;padding-left: 10%;width: 75%">Tax</p>
+      <p  style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: right;font-weight: bold;color:black">{{additiveTax | currency: cafeInfo.currency :'symbol-narrow'}}</p>
+    </div>
+
+
+    <div *ngIf="tipAmount!='0'"  style="height: 20px">
+      <p   style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: left;font-weight: bold;padding-left: 10%;width: 75%">Tip</p>
+      <p style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: right;font-weight: bold;color:black">{{tipAmount | currency: cafeInfo.currency :'symbol-narrow'}}</p>
+    </div>
+
+    <div  style="height: 20px">
+      <p style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 24px;line-height: normal;
+                                text-align: left;font-weight: bold;padding-left: 10%;width: 55%">Grand Total</p>
+      <p style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 24px;line-height: normal;
+                                text-align: right;font-weight: bold;color:black">{{grandTotal | currency: cafeInfo.currency :'symbol-narrow'}}</p>
+    </div>
+  </div>
+
+  <div class="md-form" style="height: 80px">
+  <input mdbInput placeholder="Enter Table Number" type="text" style="height: 40px;width: 80%;margin-left: 10%" name="vtableNumber" [(ngModel)]="vtableNumber" id="form1" class="form-control">
+<!--    <label for="form1" class="">Enter Table Number</label>-->
 
   </div>
 
   <div class="footer" style="width: 100%">
-    <p style="width: 60%;margin-left: 30%">Confirm Order</p>
+    <p style="width: 60%;margin-left: 30%" (click)="confirmOrder()">Confirm Order</p>
   </div>
 
  </div>

@@ -1,6 +1,7 @@
 <div  style="background-color: white;height:500px;color: #422039" (click)="closeModal('0')">
   <div style="background-color:#422039;color: white;height: 40px;margin-top:2%;padding-top: 1px ;font-weight:  bold">
-    <p class="center">{{menu.name}}</p>
+    <p class="center" style="width: 90%;display: inline-block">{{menu.name}}</p>
+    <p style="display: inline-block" (click)="closeModal('0')">X</p>
   </div>
   <div>
     <p class="center_desc">{{menu.description}}</p>
@@ -10,7 +11,8 @@
     <p> Space for options an extras and special instructions</p>
   </div>
 
-    <div (click)="addItem()" style="height: 30px;width: 100%;background-color: #7AAD0A;text-align: center;color: white"
+    <div *ngIf="isOnboarded"
+      (click)="addItem()" style="height: 30px;width: 100%;background-color: #7AAD0A;text-align: center;color: white"
     >Add to Cart </div>
 
 </div>

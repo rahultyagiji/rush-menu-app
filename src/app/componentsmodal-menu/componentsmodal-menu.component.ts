@@ -10,6 +10,7 @@ import {Menu} from '../datatypes/menu';
 export class ComponentsmodalMenuComponent implements OnInit {
 
   menu:Menu;
+  isOnboarded:boolean;
 
   constructor(
     public dialogRef: MatDialogRef<ComponentsmodalMenuComponent>,
@@ -18,7 +19,7 @@ export class ComponentsmodalMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.menu=this.modalData.menu
-    console.log(this.modalData);
+    this.isOnboarded=this.modalData.isOnboarded
   }
 
   actionFunction() {
