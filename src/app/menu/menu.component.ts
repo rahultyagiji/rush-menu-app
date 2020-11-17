@@ -38,7 +38,7 @@ export class MenuComponent implements OnInit {
   public vName:string=""
   public vEmail:string=""
   public vPhone:string=""
-
+  public vSearchText:string=""
 
   //screen size
   isMobile: boolean = false;
@@ -200,10 +200,10 @@ export class MenuComponent implements OnInit {
     const modalDialog = this.matDialog.open(ComponentsmodalMenuComponent, dialogConfig)
 
     modalDialog.beforeClosed().subscribe(result => {
-      if(result=='1'){
+      if(result.order=='1'){
         this.cart.push(this.menuDisplay[i])
-        //remember to fix quantity later....
-        this.orderService.Order(this.menuDisplay[i], this.cafe, result.specialInstruction, result.option, result.extras, 1, false);
+        //remember to fix quantity,options, extras later....
+        this.orderService.Order(this.menuDisplay[i], this.cafe, result.specialInstruction, {text:"",price:""}, [], 1, false);
 
         this.orderService.getOrder().subscribe((x) => {
           console.log(x);
@@ -233,6 +233,19 @@ export class MenuComponent implements OnInit {
       this.total$ = Math.round((this.total$ + parseFloat(x.priceQuantity)) * 100) / 100;
     });
     this.discountTotal$ = Math.round(this.total$ * (1 - this.cafeInfo.discount / 100) * 100) / 100;
+  }
+
+
+  searchMenuItem(){
+    if (this.vSearchText != '') {
+      const searchValue = this.vSearchText.toLowerCase().trim();
+      this.menuDisplay = this.menu.filter(item => {
+        return `${item.name} ${item.name}`.toLowerCase().indexOf(searchValue.toLowerCase()) > -1 || `${item.category} ${item.category}`.toLowerCase().indexOf(searchValue.toLowerCase()) > -1 || `${item.description} ${item.description}`.toLowerCase().indexOf(searchValue.toLowerCase()) > -1
+      });
+    }
+    else{
+      this.menuDisplay =  this.menu.slice()
+    }
   }
 
 

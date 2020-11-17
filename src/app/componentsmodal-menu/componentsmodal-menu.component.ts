@@ -11,6 +11,7 @@ export class ComponentsmodalMenuComponent implements OnInit {
 
   menu:Menu;
   isOnboarded:boolean;
+  vSpecialInstructions:string="";
 
   constructor(
     public dialogRef: MatDialogRef<ComponentsmodalMenuComponent>,
@@ -22,12 +23,12 @@ export class ComponentsmodalMenuComponent implements OnInit {
     this.isOnboarded=this.modalData.isOnboarded
   }
 
-  actionFunction() {
-    this.closeModal('0');
-  }
-
   closeModal(a:string) {
-    this.dialogRef.close(a);
+    if(a!='0'){
+    this.dialogRef.close({order:a,specialInstruction:this.vSpecialInstructions});}
+    else{
+      this.dialogRef.close({order:a})
+    }
   }
   addItem(){
     this.closeModal('1')

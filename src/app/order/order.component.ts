@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {OrderService} from '../order.service';
 import {Order} from '../datatypes/order';
 import {Subscription} from 'rxjs';
 import {AppService} from '../app.service';
 import {Item} from '../datatypes/item';
+import {Router} from '@angular/router';
+import {Location} from '@angular/common';
+import set = Reflect.set;
+import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-order',
@@ -11,6 +17,7 @@ import {Item} from '../datatypes/item';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
+
 
   cafeInfo:Item
 
@@ -29,7 +36,11 @@ export class OrderComponent implements OnInit {
 
   constructor(
     public orderService: OrderService,
-    public appService: AppService
+    public appService: AppService,
+    public router: Router,
+    private _location: Location,
+    private   toastr: ToastrService
+
   ) { }
 
   ngOnInit(): void {
@@ -104,24 +115,15 @@ export class OrderComponent implements OnInit {
     });
 
     if (this.order.length === 0) {
-      // let activityIndicator = this.activityIndicator.nativeElement;
-      // activityIndicator.busy = true;
-      // this.activityIndicatorbool = true;
-      // this.isBusySpinner = true;
-      // this.zeroQuantityReturn = true;
-      // this.displayCart = false;
-      // this.orderService.deleteCart();
-      // this.routerextensions.navigate(['cafe', this.cafeid, this.uid],
-      //   {
-      //     clearHistory: true
-      //   });
-      // this.cartEmpty.emit(false);
+      this._location.back();
+      this.zeroQuantityReturn = true;
+
     }
   };
 
   confirmOrder(){
     // if (!this.uid && this.order.length != 0) { if (this.guestUser) { this.uid = this.auth.getDeviceIdHash() } }
-    var a = this.orderService.confirmOrder(this.order, this.cafeid, "Cash", this.uid, this.tableNum, this.grandTotal, this.cafe.discount, this.cafe.currency, this.arrivalTime, this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails);
+    var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, "");
     // Log metrics event
     // if (this.guestUser) {
     //   firebase.analytics.logComplexEvent({
@@ -160,9 +162,24 @@ export class OrderComponent implements OnInit {
     //     }]
     //   });
     // }
-    this.zeroQuantityReturn = true;
-    this.order.length = 0;
-    this.total$ = 0;
+
+
+      setTimeout(()=>{
+        this.zeroQuantityReturn = true;
+        this.order.length = 0;
+        this.total$ = 0;
+        this.discountTotal$ = 0;
+        this.totalCharge$ = 0;
+        this.tipAmount = 0;
+        this.additiveTax = "0";
+        this.inclusiveTax = "0";
+        this.grandTotal = 0;
+        this._location.back();
+      },3000)
+
+
+
+
     // this.cartEmpty.emit(false);
     //this.btnenabled = true;
     //modalcode
@@ -188,8 +205,10 @@ export class OrderComponent implements OnInit {
   }
 
 
-  tableNumberInput(){
-    console.log(this.vtableNumber)
+
+  goBack(){
+    this._location.back()
+
   }
 
 }

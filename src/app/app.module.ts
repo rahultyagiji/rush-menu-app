@@ -19,6 +19,7 @@ import {FormsModule} from '@angular/forms';
 import { ComponentsmodalMenuComponent } from './componentsmodal-menu/componentsmodal-menu.component';
 import {MatDialogModule,MatDialogRef} from '@angular/material/dialog';
 import { OrderComponent } from './order/order.component';
+import { ToastrModule } from 'ngx-toastr';
 const icons = {
   Alarm,
   Filter,
@@ -30,8 +31,7 @@ const icons = {
     AppComponent,
     MenuComponent,
     ComponentsmodalMenuComponent,
-    OrderComponent
-  ],
+    OrderComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,7 +40,9 @@ const icons = {
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [AngularFirestore,    {
     provide: MatDialogRef,

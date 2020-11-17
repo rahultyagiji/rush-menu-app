@@ -3,6 +3,8 @@ import {Menu} from './datatypes/menu';
 import {Order} from './datatypes/order';
 import {BehaviorSubject} from 'rxjs';
 import {AngularFireDatabase} from '@angular/fire/database';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +21,10 @@ export class OrderService {
 
   constructor(
     public fb: AngularFireDatabase,
+    private toastr: ToastrService
 
   ) {
-    console.log("service called")
+
   }
 
   getOrder() {
@@ -108,6 +111,12 @@ export class OrderService {
             "deliveryDetails": address
           })
           .then((res) => {
+            this.toastr.success('Your order# is ' + a, 'Order Confirmed',{
+              positionClass: 'toast-top-full-width',
+              timeOut: 3500
+            });
+
+
             // if (uid == dId) {
       //         firebase.update('/order-user/' + dId, {
       //           "status": "ordered",
