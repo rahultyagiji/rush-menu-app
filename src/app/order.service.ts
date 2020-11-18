@@ -112,7 +112,7 @@ export class OrderService {
           })
           .then((res) => {
             this.toastr.success('Your order# is ' + a, 'Order Confirmed',{
-              positionClass: 'toast-top-full-width',
+              positionClass: 'toast-center-center',
               timeOut: 3500
             });
 
