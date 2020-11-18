@@ -15,7 +15,7 @@ import {ComponentsmodalMenuComponent} from '../componentsmodal-menu/componentsmo
 import {OrderService} from '../order.service';
 import {Order} from '../datatypes/order';
 import {AppService} from '../app.service';
-
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-menu-component',
@@ -39,6 +39,7 @@ export class MenuComponent implements OnInit {
   public vEmail:string=""
   public vPhone:string=""
   public vSearchText:string=""
+  public vtext:string="Menu"
 
   //screen size
   isMobile: boolean = false;
@@ -46,6 +47,7 @@ export class MenuComponent implements OnInit {
   height:number = window.innerHeight;
   mobileWidth:number  = 500;
   currency:string="USD";
+  deviceInfo = null;
 
   order: Order[] = [];
   total$: number = 0;
@@ -56,11 +58,13 @@ export class MenuComponent implements OnInit {
   items: Observable<any[]>;
 
   constructor(public route: ActivatedRoute,
-              public router:Router,
+              public router: Router,
               public fb: AngularFireDatabase,
               public matDialog: MatDialog,
               public orderService: OrderService,
-              public appService: AppService) {
+              public appService: AppService,
+              private deviceService: DeviceDetectorService)
+  {
 
 
     this.route.params.subscribe(
@@ -69,7 +73,6 @@ export class MenuComponent implements OnInit {
       }
     );
 
-
   }
 
   cafe:string=""
@@ -77,6 +80,12 @@ export class MenuComponent implements OnInit {
   imgSrc:string=""
 
   ngOnInit() {
+
+
+    this.deviceInfo = this.deviceService.getDeviceInfo();
+    console.log( "device info..." , this.deviceInfo);
+
+
 
     this.width = window.innerWidth
     this.height = window.innerHeight
@@ -134,8 +143,10 @@ export class MenuComponent implements OnInit {
     this.openFilter=false;
     if(cat=='All'){
       this.menuDisplay=this.menu.slice();
+      this.vtext = 'Menu';
     }
     else{
+      this.vtext = cat;
       this.menuDisplay =  this.menu.filter(function(item) {
         return item.category == cat;
       });

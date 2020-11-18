@@ -11,7 +11,7 @@
 
 
   <div style="width: 100%;height: 30px;left: 0px;background: #422039;" >
-    <span style="margin-left: 3%;margin-top: 5px;color: white;font-size: 18px;font-weight: bold"> Menu</span>
+    <span style="margin-left: 3%;margin-top: 5px;color: white;font-size: 18px;font-weight: bold"> {{vtext | titlecase}}</span>
     <i-bs name="filter" style="color: white;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="clickFilter()"></i-bs>
   </div>
 
@@ -21,9 +21,10 @@
     <i-bs name="X" style="color: black;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="closeFilter()"></i-bs>
     <!--      <span (click)="closeFilter()" class="cafeName" style="text-transform: capitalize">Close X</span>-->
     <!-- Modal content -->
-    <div class="modal-content">
+    <div class="modal-content" style="overflow: scroll">
       <div *ngFor="let cat of categories">
-        <p (click)="filterCat(cat)" style="font-size: 14px;cursor: pointer">{{cat | titlecase }}</p>
+        <p (click)="filterCat(cat)" style="font-size: 14px;cursor: pointer;height: 25px;padding: 8px 12px;border-radius: 4px;background-color: #F2F2F0">
+          {{cat | titlecase }}</p>
       </div>
 
     </div>
