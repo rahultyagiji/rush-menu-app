@@ -13,7 +13,15 @@
     <p style="display: inline-block;width: 50%;padding-left: 10px">{{ord.name | titlecase}}</p>
     <p style="display: inline-block;width: 10%;padding-left: 10px">{{ord.priceQuantity| currency: cafeInfo.currency :'symbol-narrow'}}</p>
     <p style="display: inline-block;width: 15%;text-align: right;font-size: 30px;color: #E12842" (click)="decreaseQuantity(ord,i)">-</p>
+
   </div>
+    <br>
+
+    <p style="padding-left: 40px;margin-top: 5px">{{ord.specialInstruction | titlecase}}</p>
+    <p style="padding-left: 40px;">{{ord.option.text | titlecase}}</p>
+    <div *ngFor="let extra of ord.extras">
+      <p style="padding-left: 40px">{{extra.text | titlecase}}</p>
+    </div>
   </div>
     </div>
     <br/>

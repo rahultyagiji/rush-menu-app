@@ -1,13 +1,37 @@
 <div  style="background-color: white;height:500px;color: #422039">
-  <div style="background-color:#422039;color: white;height: 40px;margin-top:2%;padding-top: 1px ;font-weight:  bold">
-    <p class="center" style="width: 90%;display: inline-block">{{menu.name}}</p>
-    <p style="display: inline-block" (click)="closeModal('0')">X</p>
+  <div style="width: 100%;background-color:#422039;color: white;height: 40px;font-weight:  bold">
+    <p class="center" style="width: 80%;display: inline-block">{{menu.name}}</p>
+    <p style="display: inline-block;vertical-align: top" (click)="closeModal('0')">X</p>
   </div>
   <div>
     <p class="center_desc">{{menu.description}}</p>
   </div>
-  <div  style="background-color: white;height: 180px">
 
+  <div style="height: 200px">
+  <div  style="background-color: white;font-size: 18px">
+    <mat-radio-group
+      aria-labelledby="radio-group-label"
+      class="radio-group"
+      [(ngModel)]="selectionOption"
+      (ngModelChange)="showValuePromptText('Option', $event)">
+      <mat-radio-button class="radio-button" *ngFor="let option of menu.option" [value]="option.name">
+        {{'+ $' + option.extraPrice  + ' ' + option.name}}
+        <br/>
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+
+  <div  style="background-color: white;font-size: 18px;overflow: scroll;height: 100px">
+
+      <div *ngFor="let extra of menu.extra; let i = index" style="height: 30px" class="checkbox-section">
+
+        <mat-checkbox class="checkbox-margin"
+          (change)="list_change($event,i)">{{'+ $' + extra.extraPrice  + ' ' + extra.name}}</mat-checkbox>
+        <br/>
+      </div>
+<!--    </div>-->
+  </div>
   </div>
 
   <div class="md-form" style="height: 80px" *ngIf="isOnboarded">

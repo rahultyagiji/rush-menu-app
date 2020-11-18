@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,10 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {FormsModule} from '@angular/forms';
 import { ComponentsmodalMenuComponent } from './componentsmodal-menu/componentsmodal-menu.component';
 import {MatDialogModule,MatDialogRef} from '@angular/material/dialog';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatListModule } from '@angular/material/list';
+
 import { OrderComponent } from './order/order.component';
 import { ToastrModule } from 'ngx-toastr';
 const icons = {
@@ -39,8 +43,11 @@ const icons = {
     NgxBootstrapIconsModule.pick(icons),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
+    MatCheckboxModule,
+    MatListModule,
     FormsModule,
     MatDialogModule,
+    MatRadioModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],

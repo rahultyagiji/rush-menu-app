@@ -178,20 +178,21 @@ export class MenuComponent implements OnInit {
   //   this.router.navigate(["option-pop"])
   // }
 
-
+    console.log(this.width)
     const dialogConfig = new MatDialogConfig();
+
     dialogConfig.disableClose = true;
     dialogConfig.id = 'modal-component';
     dialogConfig.backdropClass = 'class-backdrop';
-    dialogConfig.width = this.width.toString()
-    dialogConfig.maxWidth = this.width,
-    dialogConfig.maxHeight = '500px',
+    dialogConfig.width = '100vw';
+    dialogConfig.maxWidth = '100vw';
+    dialogConfig.maxHeight = '600px',
       dialogConfig.position = {
-    left: '20%',
+    left: '10%',
     top: '0%'
       }
       dialogConfig.position = {
-      'top':'10px'
+
       }
     dialogConfig.data = {
       menu:this.menuDisplay[i],
@@ -202,8 +203,8 @@ export class MenuComponent implements OnInit {
     modalDialog.beforeClosed().subscribe(result => {
       if(result.order=='1'){
         this.cart.push(this.menuDisplay[i])
-        //remember to fix quantity,options, extras later....
-        this.orderService.Order(this.menuDisplay[i], this.cafe, result.specialInstruction, {text:"",price:""}, [], 1, false);
+        //remember to fix quantity, options, extras later....
+        this.orderService.Order(this.menuDisplay[i], this.cafe, result.specialInstruction, result.option, result.extras, 1, false);
 
         this.orderService.getOrder().subscribe((x) => {
           console.log(x);
