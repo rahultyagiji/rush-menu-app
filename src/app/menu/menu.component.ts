@@ -177,8 +177,6 @@ export class MenuComponent implements OnInit {
   openModal(i) {
   //   this.router.navigate(["option-pop"])
   // }
-
-    console.log(this.width)
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
@@ -190,9 +188,6 @@ export class MenuComponent implements OnInit {
       dialogConfig.position = {
     left: '10%',
     top: '0%'
-      }
-      dialogConfig.position = {
-
       }
     dialogConfig.data = {
       menu:this.menuDisplay[i],
@@ -207,7 +202,6 @@ export class MenuComponent implements OnInit {
         this.orderService.Order(this.menuDisplay[i], this.cafe, result.specialInstruction, result.option, result.extras, 1, false);
 
         this.orderService.getOrder().subscribe((x) => {
-          console.log(x);
           this.order = x;
           if (this.order.length > 0) {
 

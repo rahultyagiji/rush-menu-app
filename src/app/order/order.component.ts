@@ -79,12 +79,12 @@ export class OrderComponent implements OnInit {
     this.additiveTax = "0";
     this.order.forEach((x) => {
       if (typeof x.tax != 'undefined') {
-        if (x.tax.type == 'additive') {
+        if (x.tax.type === 'additive') {
 
 
           this.additiveTax = ((parseFloat(x.priceQuantity) * (1 - this.cafeInfo.discount / 100)) * x.tax.percent / 100 + parseFloat(this.additiveTax)).toFixed(2).toString()
         }
-        if (x.tax.type == 'inclusive') {
+        if (x.tax.type === 'inclusive') {
           this.inclusiveTax = ((parseFloat(x.priceQuantity) * (1 - this.cafeInfo.discount / 100)) * x.tax.percent / 100 + parseFloat(this.inclusiveTax)).toFixed(2).toString()
         }
       }
@@ -93,7 +93,7 @@ export class OrderComponent implements OnInit {
 
   decreaseQuantity(item, i) {
     // this.cartEmpty.emit(true);
-    if (this.order[i].quantity != 0) {
+    if (this.order[i].quantity !== 0) {
       this.order[i].quantity = this.order[i].quantity - 1;
       this.order[i].priceQuantity = (parseFloat(this.order[i].price) * this.order[i].quantity).toString();
       this.totalPrice(this.order);

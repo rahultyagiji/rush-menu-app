@@ -1,17 +1,21 @@
+
 <div  style="color: #422039" >
+
   <div class="topBox">
     <span class="cafeName" style="text-transform: capitalize">{{ cafeName }}</span>
     <br/>
   </div>
 <!--</div>-->
    <img [src]="imgSrc"
-       style="width:100%;max-height:10%;">
+       style="height:200px;width: 100vw">
 
 
   <div style="width: 100%;height: 30px;left: 0px;background: #422039;" >
     <span style="margin-left: 3%;margin-top: 5px;color: white;font-size: 18px;font-weight: bold"> Menu</span>
     <i-bs name="filter" style="color: white;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="clickFilter()"></i-bs>
   </div>
+
+
   <!-- The Modal -->
   <div id="myModal" class="modal" *ngIf="openFilter" >
     <i-bs name="X" style="color: black;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="closeFilter()"></i-bs>
@@ -61,7 +65,7 @@
     <!--    <label for="form1" class="">Enter Table Number</label>-->
   </div>
 
-  <div   *ngIf="!detailsObtained" style="">
+  <div   *ngIf="!detailsObtained" style="height: 500px;overflow: scroll">
     <div *ngFor="let menu of menuDisplay; let i = index" style="">
       <div  class="{{ i%2==0 ? 'evenStyle' : 'oddStyle' }}">
 
@@ -96,5 +100,6 @@
   </div>
 
 </div>
+
 
 

@@ -15,8 +15,8 @@ export class ComponentsmodalMenuComponent implements OnInit {
   isOnboarded:boolean;
   vSpecialInstructions:string="";
   selectionOption:string=""
-  optionText: string;
-  optionPrice: number;
+  optionText: string="";
+  optionPrice: number=0;
 
   public extras: Array<{ "name": string, "extraPrice": number, "selected":boolean }> = [];
   public extrasAdded: Array<{ "text": string, "price": number }> = [];
