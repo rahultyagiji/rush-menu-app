@@ -7,24 +7,23 @@
   <div  class="topBox2">
 
     <div style="height:200px;overflow-y: scroll">
-  <div *ngFor="let ord of order;let i = index">
-    <div style="height: 40px">
-    <p style="display: inline-block;width: 5%;padding-left: 10px"> {{ord.quantity}}</p>
-    <p style="display: inline-block;width: 50%;padding-left: 10px">{{ord.name | titlecase}}</p>
-    <p style="display: inline-block;width: 10%;padding-left: 10px">{{ord.priceQuantity| currency: cafeInfo.currency :'symbol-narrow'}}</p>
-    <p style="display: inline-block;width: 15%;text-align: right;font-size: 30px;color: #E12842" (click)="decreaseQuantity(ord,i)">-</p>
+      <div *ngFor="let ord of order;let i = index">
+        <div style="height: 40px">
+        <p style="display: inline-block;width: 5%;padding-left: 10px"> {{ord.quantity}}</p>
+        <p style="display: inline-block;width: 50%;padding-left: 10px">{{ord.name | titlecase}}</p>
+        <p style="display: inline-block;width: 10%;padding-left: 10px">{{ord.priceQuantity| currency: cafeInfo.currency :'symbol-narrow'}}</p>
+        <p style="display: inline-block;width: 15%;text-align: right;font-size: 30px;color: #E12842" (click)="decreaseQuantity(ord,i)">-</p>
 
-  </div>
-    <br>
+      </div>
+      <br>
 
-    <p style="padding-left: 40px;margin-top: 5px">{{ord.specialInstruction | titlecase}}</p>
-    <p style="padding-left: 40px;">{{ord.option.text | titlecase}}</p>
-    <div *ngFor="let extra of ord.extras">
-      <p style="padding-left: 40px">{{extra.text | titlecase}}</p>
+      <p style="padding-left: 40px;margin-top: 5px">{{ord.specialInstruction | titlecase}}</p>
+      <p style="padding-left: 40px;">{{ord.option.text | titlecase}}</p>
+      <div *ngFor="let extra of ord.extras">
+        <p style="padding-left: 40px">{{extra.text | titlecase}}</p>
+      </div>
     </div>
-  </div>
     </div>
-    <br/>
 
 
 
@@ -86,13 +85,22 @@
       <p style="display: inline-block;font-family: Roboto;font-style: normal;font-size: 24px;line-height: normal;
                                 text-align: right;font-weight: bold;color:black">{{grandTotal | currency: cafeInfo.currency :'symbol-narrow'}}</p>
     </div>
-  </div>
 
-  <div class="md-form" style="height: 80px">
-  <input mdbInput placeholder="Enter Table Number" type="text" style="height: 40px;width: 96%;margin-left: 1%;border-radius: 10px" name="vtableNumber" [(ngModel)]="vtableNumber" id="form1" class="form-control">
-<!--    <label for="form1" class="">Enter Table Number</label>-->
+
+
 
   </div>
+
+  <div class="md-form" style="height: 40px;top: 420px;position: fixed;width: 100%;">
+    <p style="display: inline-block;width:44%;margin-left: 2%;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: left;font-weight: bold;"> Table Number</p>
+    <input mdbInput placeholder="Enter Table Number" type="text" style="font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: left;font-weight: bold;padding-left: 3%;display: inline-block;height: 40px;width: 45%;margin-left: 1%;border-radius: 10px" name="
+" [(ngModel)]="vtableNumber" id="form1" class="form-control">
+    <!--    <label for="form1" class="">Enter Table Number</label>-->
+
+  </div>
+
 
   <div class="footer" style="width: 100%">
     <p style="width: 60%;margin-left: 30%" (click)="confirmOrder()">Confirm Order</p>

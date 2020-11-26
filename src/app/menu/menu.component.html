@@ -71,7 +71,7 @@
       <div  class="{{ i%2==0 ? 'evenStyle' : 'oddStyle' }}">
 
         <div (click)="openModal(i)">
-        <div style=" margin-left: 5px;font-weight: bold;font-size: 18px;display: inline-block;width: 70%" (click)="openModal(i)">
+        <div style=" margin-left: 5px;font-weight: bold;font-size: 18px;display: inline-block;width: 70%" class=" {{menu.available ? '' : 'line-through'}}" (click)="openModal(i)">
           <span > {{menu.name | titlecase}}</span>
           <br/>
         </div>

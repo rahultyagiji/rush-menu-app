@@ -45,6 +45,7 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.vtableNumber = this.orderService.getTableNumber()
     this.cafeInfo = this.appService.getCafeInfo();
 
     this.orderSubscription = this.orderService.getOrder().subscribe((x) => {

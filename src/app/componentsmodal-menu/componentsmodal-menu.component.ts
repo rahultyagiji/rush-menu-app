@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {Menu} from '../datatypes/menu';
+import {Menu, MenuDisplay} from '../datatypes/menu';
 import {MatRadioModule} from '@angular/material/radio';
 
 
@@ -11,7 +11,7 @@ import {MatRadioModule} from '@angular/material/radio';
 })
 export class ComponentsmodalMenuComponent implements OnInit {
 
-  menu:Menu;
+  menu:MenuDisplay;
   isOnboarded:boolean;
   vSpecialInstructions:string="";
   selectionOption:string=""

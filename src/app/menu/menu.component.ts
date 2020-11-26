@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-// import data from "../../assets/data.json";
-import {Menu} from "../datatypes/menu";
+import {Menu, MenuDisplay} from '../datatypes/menu';
 import {ActivatedRoute, Router} from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
-import * as firebase from 'firebase/app';
 import 'firebase/firestore';
+import moment from 'moment';
+
 
 import { Observable } from 'rxjs';
 import {AngularFireDatabase} from '@angular/fire/database';
@@ -15,7 +14,6 @@ import {ComponentsmodalMenuComponent} from '../componentsmodal-menu/componentsmo
 import {OrderService} from '../order.service';
 import {Order} from '../datatypes/order';
 import {AppService} from '../app.service';
-import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-menu-component',
@@ -28,8 +26,9 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 export class MenuComponent implements OnInit {
   public menu:Menu[]=[]
   public cafeInfo:Item
-  public menuDisplay:Menu[]=[]
-  public cart:Menu[]=[];
+  public menuDisplay:MenuDisplay[]=[]
+  public menuDisplayUnfiltered:MenuDisplay[]=[]
+  public cart:MenuDisplay[]=[];
   public selectedMenu:Menu;
   public categories:string[]=["All"];
   public openFilter:boolean=false;
@@ -40,6 +39,7 @@ export class MenuComponent implements OnInit {
   public vPhone:string=""
   public vSearchText:string=""
   public vtext:string="Menu"
+  public tableNum:string=""
 
   //screen size
   isMobile: boolean = false;
@@ -62,14 +62,15 @@ export class MenuComponent implements OnInit {
               public fb: AngularFireDatabase,
               public matDialog: MatDialog,
               public orderService: OrderService,
-              public appService: AppService,
-              private deviceService: DeviceDetectorService)
+              public appService: AppService)
   {
 
 
     this.route.params.subscribe(
       params => {
         this.cafe = params['id'];
+        this.tableNum = params['loc'];
+        this.orderService.setTableNumber(params['loc'])
       }
     );
 
@@ -80,12 +81,6 @@ export class MenuComponent implements OnInit {
   imgSrc:string=""
 
   ngOnInit() {
-
-
-    this.deviceInfo = this.deviceService.getDeviceInfo();
-    console.log( "device info..." , this.deviceInfo);
-
-
 
     this.width = window.innerWidth
     this.height = window.innerHeight
@@ -107,7 +102,35 @@ export class MenuComponent implements OnInit {
 
     this.fb.list<Menu>(ref).valueChanges().subscribe((res) => {
       this.menu = res.slice()
-      this.menuDisplay = res.slice()
+
+      res.forEach((x) => {
+        var a = this.checkAvailability(x.available.timing.startTime, x.available.timing.endTime, x.available.inStock)
+        this.menuDisplay.push(
+          {
+            item: x.item,
+            imgSrc: x.imgSrc,
+            name: x.name,
+            price: x.price,
+            category: x.category,
+            description: x.description,
+            option: x.option,
+            extra: x.extra,
+            available: a,
+            tax: x.tax
+          })
+        this.menuDisplayUnfiltered.push({
+          item: x.item,
+          imgSrc: x.imgSrc,
+          name: x.name,
+          price: x.price,
+          category: x.category,
+          description: x.description,
+          option: x.option,
+          extra: x.extra,
+          available: a,
+          tax: x.tax
+        })
+      })
     })
 
 
@@ -124,6 +147,7 @@ export class MenuComponent implements OnInit {
             this.totalPrice(x);
           }})
       },300)
+
 
   }
 
@@ -142,12 +166,12 @@ export class MenuComponent implements OnInit {
   filterCat(cat){
     this.openFilter=false;
     if(cat=='All'){
-      this.menuDisplay=this.menu.slice();
+      this.menuDisplay=this.menuDisplayUnfiltered.slice();
       this.vtext = 'Menu';
     }
     else{
       this.vtext = cat;
-      this.menuDisplay =  this.menu.filter(function(item) {
+      this.menuDisplay =  this.menuDisplayUnfiltered.filter(function(item) {
         return item.category == cat;
       });
     }
@@ -209,7 +233,7 @@ export class MenuComponent implements OnInit {
     modalDialog.beforeClosed().subscribe(result => {
       if(result.order=='1'){
         this.cart.push(this.menuDisplay[i])
-        //remember to fix quantity, options, extras later....
+        //remember to fix quantity later....
         this.orderService.Order(this.menuDisplay[i], this.cafe, result.specialInstruction, result.option, result.extras, 1, false);
 
         this.orderService.getOrder().subscribe((x) => {
@@ -245,15 +269,33 @@ export class MenuComponent implements OnInit {
   searchMenuItem(){
     if (this.vSearchText != '') {
       const searchValue = this.vSearchText.toLowerCase().trim();
-      this.menuDisplay = this.menu.filter(item => {
+      this.menuDisplay = this.menuDisplayUnfiltered.filter(item => {
         return `${item.name} ${item.name}`.toLowerCase().indexOf(searchValue.toLowerCase()) > -1 || `${item.category} ${item.category}`.toLowerCase().indexOf(searchValue.toLowerCase()) > -1 || `${item.description} ${item.description}`.toLowerCase().indexOf(searchValue.toLowerCase()) > -1
       });
     }
     else{
-      this.menuDisplay =  this.menu.slice()
+      this.menuDisplay =  this.menuDisplayUnfiltered.slice()
     }
   }
 
+  checkAvailability(startTime, endTime, inStock) {
 
+    var st = moment(startTime, "HH:mm");
+    var et = moment(endTime, "HH:mm");
+
+
+
+    if (inStock == false) {
+      return false
+    }
+    else {
+      if (moment(moment()).isBetween(st, et)) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+  }
 }
 

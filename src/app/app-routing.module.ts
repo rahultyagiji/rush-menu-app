@@ -19,6 +19,10 @@ const routes: Routes = [
     component: MenuComponent
   },
   {
+    path: 'menu/:id/:loc',
+    component: MenuComponent
+  },
+  {
     path: "option-pop",
     component: ComponentsmodalMenuComponent
   },

@@ -41,8 +41,11 @@
   </div>
 
 
-    <div *ngIf="isOnboarded"
+    <div *ngIf="isOnboarded && menu.available"
       (click)="addItem()" style="height: 30px;width: 100%;background-color: #7AAD0A;text-align: center;color: white"
     >Add to Cart </div>
+
+  <div *ngIf="isOnboarded && !menu.available" style="height: 30px;width: 100%;background-color: #7AAD0A;text-align: center;color: white"
+  >Item is currently unavailable </div>
 
 </div>

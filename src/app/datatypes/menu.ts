@@ -7,13 +7,20 @@ export class Menu {
   description: string;
   option: { "name": string, "extraPrice": number }[];
   extra: { "name": string, "extraPrice": number }[];
-  available: boolean;
+  available: {
+    inStock:boolean,
+    timing:{
+      endTime:string,
+      startTime:string
+    }
+  };
   tax: {
     "enable": boolean
     "name": string,
     "percent": number,
     "type": string,
   }
+
 
   constructor(options) {
     this.item = options.item;
@@ -30,4 +37,22 @@ export class Menu {
 
   }
 
+}
+
+export class MenuDisplay{
+  item: number;
+  imgSrc: string;
+  name: string;
+  price: string;
+  category: string;
+  description: string;
+  option: { "name": string, "extraPrice": number }[];
+  extra: { "name": string, "extraPrice": number }[];
+  available: boolean
+  tax: {
+    "enable": boolean
+    "name": string,
+    "percent": number,
+    "type": string,
+  }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Menu} from './datatypes/menu';
+import {Menu, MenuDisplay} from './datatypes/menu';
 import {Order} from './datatypes/order';
 import {BehaviorSubject} from 'rxjs';
 import {AngularFireDatabase} from '@angular/fire/database';
@@ -14,10 +14,9 @@ export class OrderService {
   price: string = "0";
   priceQuantity: string = "0";
   order: Order[] = [];
+  tableNumber: string = "";
 
   private _order = new BehaviorSubject<Order[]>([]);
-
-
 
   constructor(
     public fb: AngularFireDatabase,
@@ -41,7 +40,7 @@ export class OrderService {
   }
 
 
-  Order(menu: Menu, cafeId, specialInstruction, option: { 'text': string, 'price': string }
+  Order(menu: MenuDisplay, cafeId, specialInstruction, option: { 'text': string, 'price': string }
     , extras: { 'text': string, 'price': string }[], quantity: number, magic: boolean) {
 
       this.price = "0";
@@ -242,5 +241,13 @@ export class OrderService {
     return orderAlphabet + (Math.floor(Math.random() * (50 - 1 + 1)) + 1).toString();
   }
 
+  setTableNumber(tableNum){
+    this.tableNumber = tableNum
+  }
 
+  getTableNumber()
+  {
+    console.log(this.tableNumber)
+    return   this.tableNumber
+  }
 }

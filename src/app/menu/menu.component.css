@@ -75,3 +75,8 @@
   position: fixed;
   bottom: 0px;
 }
+
+.line-through{
+  text-decoration: line-through
+}
+
