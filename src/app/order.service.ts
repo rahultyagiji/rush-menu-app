@@ -247,7 +247,6 @@ export class OrderService {
 
   getTableNumber()
   {
-    console.log(this.tableNumber)
     return   this.tableNumber
   }
 }

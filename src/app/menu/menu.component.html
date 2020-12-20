@@ -75,7 +75,7 @@
           <span > {{menu.name | titlecase}}</span>
           <br/>
         </div>
-          <p style="display: inline-block" (click)="openModal(i)">{{menu.price | currency:currency:'symbol'}}</p>
+          <p style="display: inline-block" (click)="openModal(i)">{{menu.price | currency:cafeInfo.currency:'symbol'}}</p>
         </div>
 
         <div style=" margin-left: 5px;width:50%;font-weight: bold;font-size: 14px" (click)="openModal(i)">

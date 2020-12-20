@@ -32,7 +32,7 @@ export class OrderComponent implements OnInit {
   grandTotal: number = 0;
   private orderSubscription: Subscription;
   zeroQuantityReturn:boolean=false;
-  vtableNumber:string=""
+  vtableNumber:string="";
 
   constructor(
     public orderService: OrderService,

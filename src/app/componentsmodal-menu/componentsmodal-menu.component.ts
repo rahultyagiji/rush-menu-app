@@ -63,7 +63,7 @@ export class ComponentsmodalMenuComponent implements OnInit {
     }
   }
   addItem(){
-    this.closeModal('1')
+    this.closeModal('1');
   }
 
   showValuePromptText(option, args){
