@@ -33,6 +33,7 @@ export class OrderComponent implements OnInit {
   private orderSubscription: Subscription;
   zeroQuantityReturn:boolean=false;
   vtableNumber:string="";
+  vTabChargeCode:string="";
 
   constructor(
     public orderService: OrderService,
@@ -45,7 +46,12 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
 
+    if(typeof this.orderService.getTableNumber() != 'undefined')
     this.vtableNumber = this.orderService.getTableNumber()
+    if (this.vtableNumber.substring(0,3)=="tab"){
+      this.vTabChargeCode = this.vtableNumber;
+    }
+
     this.cafeInfo = this.appService.getCafeInfo();
 
     this.orderSubscription = this.orderService.getOrder().subscribe((x) => {
@@ -124,46 +130,7 @@ export class OrderComponent implements OnInit {
 
   confirmOrder(){
     // if (!this.uid && this.order.length != 0) { if (this.guestUser) { this.uid = this.auth.getDeviceIdHash() } }
-    var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, "");
-    // Log metrics event
-    // if (this.guestUser) {
-    //   firebase.analytics.logComplexEvent({
-    //     key: "guest_pay_later_order",
-    //     parameters: [{
-    //       key: "order",
-    //       type: "array",
-    //       value: [
-    //         {
-    //           parameters: [
-    //             { key: "cafeId", value: this.cafeid, type: LogComplexEventTypeParameter.STRING },
-    //             { key: "uid", value: this.uid, type: LogComplexEventTypeParameter.STRING },
-    //             { key: "arrivalTime", value: this.arrivalTime, type: LogComplexEventTypeParameter.STRING },
-    //             { key: "grandTotal", value: this.grandTotal, type: LogComplexEventTypeParameter.DOUBLE },
-    //           ]
-    //         }
-    //       ]
-    //     }]
-    //   });
-    // } else {
-    //   firebase.analytics.logComplexEvent({
-    //     key: "registered_customer_pay_later_order",
-    //     parameters: [{
-    //       key: "order",
-    //       type: "array",
-    //       value: [
-    //         {
-    //           parameters: [
-    //             { key: "cafeId", value: this.cafeid, type: LogComplexEventTypeParameter.STRING },
-    //             { key: "uid", value: this.uid, type: LogComplexEventTypeParameter.STRING },
-    //             { key: "arrivalTime", value: this.arrivalTime, type: LogComplexEventTypeParameter.STRING },
-    //             { key: "grandTotal", value: this.grandTotal, type: LogComplexEventTypeParameter.DOUBLE },
-    //           ]
-    //         }
-    //       ]
-    //     }]
-    //   });
-    // }
-
+    var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, "",this.vTabChargeCode);
 
       setTimeout(()=>{
         this.zeroQuantityReturn = true;
@@ -178,31 +145,6 @@ export class OrderComponent implements OnInit {
         this._location.back();
       },3000)
 
-
-
-
-    // this.cartEmpty.emit(false);
-    //this.btnenabled = true;
-    //modalcode
-
-
-    // let options = {
-    //   context: { "paymentmode": "cash", "orderNo": a },
-    //   fullscreen: true,
-    //   viewContainerRef: this.vcRef,
-    //
-    // };
-    // this.popup.showModal(ConfirmationModalComponent, options).then((response) => {
-    //   if (response) {
-    //     this.orderService.removeCart(this.uid);
-    //     setTimeout(() => {
-    //       this.routerextensions.navigate(["items", 1],
-    //         {
-    //           clearHistory: true
-    //         });
-    //     }, 30)
-    //   }
-    // });
   }
 
 

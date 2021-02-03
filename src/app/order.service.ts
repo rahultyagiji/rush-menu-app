@@ -80,8 +80,9 @@ export class OrderService {
     }
 
 
-  confirmOrder(order: Order[], cafe, payway, uid, location, totalPrice, discount, curr, arrival, tip, additiveTax, inclusiveTax, address) {
+  confirmOrder(order: Order[], cafe, payway, uid, location, totalPrice, discount, curr, arrival, tip, additiveTax, inclusiveTax, address, tabCharge) {
     if (this.order.length != 0) {
+      console.log(location)
 
       var time = Math.floor(Date.now() / 1000);
       var a = this.orderNo();
@@ -107,123 +108,14 @@ export class OrderService {
             "tip": tip,
             "additiveTax": additiveTax,
             "inclusiveTax": inclusiveTax,
-            "deliveryDetails": address
+            "deliveryDetails": address,
+            "tabChargeCode": tabCharge
           })
           .then((res) => {
             this.toastr.success('Your order# is ' + a, 'Order Confirmed',{
               positionClass: 'toast-center-center',
               timeOut: 3500
             });
-
-
-            // if (uid == dId) {
-      //         firebase.update('/order-user/' + dId, {
-      //           "status": "ordered",
-      //           "cafe": cafe,
-      //           "orderNo": res.key,
-      //           "orderNo2": a,
-      //           "timestamp": time,
-      //           "payway": "Cash",
-      //           "discount": discount,
-      //           "currency": curr,
-      //           "arrivalTime": arrival
-      //         })
-      //           .then(() => {
-      //               firebase.remove('/cart/' + dId + '/' + cafe);
-      //             }
-      //           )
-      //           .catch(() => {
-      //             //    fix this so that there is no inconsistency between user and cafe tables
-      //           })
-      //       // } else {
-      //     //     firebase.push('/order-user/' + uid, {
-      //     //       "status": "ordered",
-      //     //       "cafe": cafe,
-      //     //       "orderNo": res.key,
-      //     //       "orderNo2": a,
-      //     //       "timestamp": time,
-      //     //       "payway": "Cash",
-      //     //       "discount": discount,
-      //     //       "currency": curr,
-      //     //       "arrivalTime": arrival
-      //     //     })
-      //     //       .then(() => {
-      //     //           firebase.remove('/cart/' + uid + '/' + cafe);
-      //     //
-      //     //         }
-      //     //       )
-      //     //       .catch(() => {
-      //     //         //    fix this so that there is no inconsistency between user and cafe tables
-      //     //       })
-      //     //   }
-      //     // })
-      //     // .catch((err) => {
-      //     // })
-      //
-      // }
-    //   else {
-    //     firebase.push('/order-cafe/' + cafe, {
-    //       "print": true,
-    //       order,
-    //       "status": "ordered",
-    //       "uid": uid,
-    //       "location": location,
-    //       "orderNo2": a,
-    //       "timestamp": time,
-    //       "totalPrice": totalPrice,
-    //       "paymentBalance": 0,
-    //       "payway": "Card",
-    //       "discount": discount,
-    //       "currency": curr,
-    //       "arrivalTime": arrival,
-    //       "tip": tip,
-    //       "additiveTax": additiveTax,
-    //       "inclusiveTax": inclusiveTax,
-    //       "deliveryDetails": address
-    //     })
-    //       .then((res) => {
-    //           if (uid == dId) {
-    //             firebase.update('/order-user/' + dId, {
-    //               "status": "ordered",
-    //               "cafe": cafe,
-    //               "orderNo": res.key,
-    //               "orderNo2": a,
-    //               "timestamp": time,
-    //               "payway": "Card",
-    //               "discount": discount,
-    //               "currency": curr,
-    //               "arrivalTime": arrival
-    //             })
-    //               .then(() => {
-    //                   firebase.remove('/cart/' + dId + '/' + cafe);
-    //                 }
-    //               )
-    //               .catch(() => {
-    //                 //    fix this so that there is no inconsistency between user and cafe tables
-    //               })
-    //           } else {
-    //             firebase.push('/order-user/' + uid, {
-    //               "status": "ordered",
-    //               "cafe": cafe,
-    //               "orderNo": res.key,
-    //               "orderNo2": a,
-    //               "timestamp": time,
-    //               "payway": "Card",
-    //               "discount": discount,
-    //               "currency": curr,
-    //               "arrivalTime": arrival
-    //             })
-    //               .then(() => {
-    //                 firebase.remove('/cart/' + uid + '/' + cafe)
-    //               })
-    //           }
-    //         }
-    //       ).catch((err) => {
-    //       console.log("error is ", err)
-    //     })
-    //   }
-    //   return a;
-    // }
   })
       }
     }

@@ -40,6 +40,7 @@ export class MenuComponent implements OnInit {
   public vSearchText:string=""
   public vtext:string="Menu"
   public tableNum:string=""
+  public tabChargeCode:string=""
 
   //screen size
   isMobile: boolean = false;
@@ -71,6 +72,10 @@ export class MenuComponent implements OnInit {
         this.cafe = params['id'];
         this.tableNum = params['loc'];
         this.orderService.setTableNumber(params['loc'])
+
+        if (params['loc'].substring(0,3)=="tab"){
+          this.tabChargeCode = params['loc'].substring(0,3)
+        }
       }
     );
 
@@ -215,7 +220,7 @@ export class MenuComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
-    dialogConfig.id = 'modal-component';
+    dialogConfig.id = '';
     dialogConfig.backdropClass = 'class-backdrop';
     dialogConfig.width = '100vw';
     dialogConfig.maxWidth = '100vw';
