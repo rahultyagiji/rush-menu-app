@@ -48,10 +48,11 @@ export class OrderComponent implements OnInit {
 
     if(typeof this.orderService.getTableNumber() != 'undefined')
     this.vtableNumber = this.orderService.getTableNumber()
-    if (this.vtableNumber.substring(0,3)=="tab"){
-      this.vTabChargeCode = this.vtableNumber;
+    if(this.vtableNumber!='') {
+      if (this.vtableNumber.substring(0, 3) == "tab") {
+        this.vTabChargeCode = this.vtableNumber;
+      }
     }
-
     this.cafeInfo = this.appService.getCafeInfo();
 
     this.orderSubscription = this.orderService.getOrder().subscribe((x) => {

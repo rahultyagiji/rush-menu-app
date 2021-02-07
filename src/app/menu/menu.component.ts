@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Inject, Injectable } from '@angular/core';
 import {Menu, MenuDisplay} from '../datatypes/menu';
 import {ActivatedRoute, Router} from '@angular/router';
 import 'firebase/firestore';
@@ -14,6 +14,9 @@ import {ComponentsmodalMenuComponent} from '../componentsmodal-menu/componentsmo
 import {OrderService} from '../order.service';
 import {Order} from '../datatypes/order';
 import {AppService} from '../app.service';
+import {keyframes} from '@angular/animations';
+
+
 
 @Component({
   selector: 'app-menu-component',
@@ -54,6 +57,9 @@ export class MenuComponent implements OnInit {
   total$: number = 0;
   discountTotal$: number = 0;
   itemCount: number = 0;
+  ifOrderFound:boolean=false;
+  oldOrderNumber:string=""
+  oldOrderDetails: Order[]
 
 
   items: Observable<any[]>;
@@ -86,6 +92,11 @@ export class MenuComponent implements OnInit {
   imgSrc:string=""
 
   ngOnInit() {
+
+
+    if (typeof sessionStorage.getItem("orderNo") !='undefined' && sessionStorage.getItem("orderNo")!=null){
+      this.ifOrderFound=true;
+    }
 
     this.width = window.innerWidth
     this.height = window.innerHeight
@@ -302,5 +313,13 @@ export class MenuComponent implements OnInit {
       }
     }
   }
+
+
+  viewOrderDetails(){
+    this.openFilter=true;
+    this.oldOrderNumber = sessionStorage.getItem("orderNo")
+    this.oldOrderDetails = JSON.parse(sessionStorage.getItem("order"))
+  }
+
 }
 

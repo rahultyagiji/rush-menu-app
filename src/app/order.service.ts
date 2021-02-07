@@ -112,6 +112,11 @@ export class OrderService {
             "tabChargeCode": tabCharge
           })
           .then((res) => {
+            sessionStorage.setItem( "orderNo" , a)
+            sessionStorage.setItem( "totalPrice" , totalPrice)
+            sessionStorage.setItem("order", JSON.stringify(order))
+            sessionStorage.setItem("cafe",cafe)
+
             this.toastr.success('Your order# is ' + a, 'Order Confirmed',{
               positionClass: 'toast-center-center',
               timeOut: 3500

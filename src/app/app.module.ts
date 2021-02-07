@@ -10,7 +10,7 @@ import { NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
-import { Alarm, Filter, X } from 'ngx-bootstrap-icons';
+import { Alarm, Filter, X, CartFill } from 'ngx-bootstrap-icons';
 import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestore} from '@angular/fire/firestore';
@@ -27,8 +27,12 @@ import { ToastrModule } from 'ngx-toastr';
 const icons = {
   Alarm,
   Filter,
-  X
+  X,
+  CartFill
 };
+
+
+
 
 @NgModule({
   declarations: [

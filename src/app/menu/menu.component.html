@@ -2,7 +2,9 @@
 <div  style="color: #422039" >
 
   <div class="topBox">
-    <span class="cafeName" style="text-transform: capitalize">{{ cafeName }}</span>
+    <span class="cafeName" style="text-transform: capitalize;width:80%">{{ cafeName }}</span>
+    <i-bs name="cart-fill" class="cafeName" style="width: 10%;color: #7AAD0A" *ngIf="ifOrderFound"
+    (click)="viewOrderDetails()"></i-bs>
     <br/>
   </div>
 <!--</div>-->
@@ -104,3 +106,39 @@
 
 
 
+<!-- The Modal -->
+<div id="orderModal" class="modal" *ngIf="openFilter">
+  <i-bs name="X" style="color: black;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="closeFilter()"></i-bs>
+  <!--      <span (click)="closeFilter()" class="cafeName" style="text-transform: capitalize">Close X</span>-->
+  <!-- Modal content -->
+  <div class="modal-content" style="overflow: scroll;height: 60%">
+
+      <div  style="color: #422039">
+          <p>Order No: {{oldOrderNumber}}</p>
+          <div style="height:300px;overflow-y: scroll">
+            <div *ngFor="let ord of oldOrderDetails;let i = index">
+              <div style="height: 30px">
+                <p style="display: inline-block;width: 5%;padding-left: 5px"> {{ord.quantity}}</p>
+                <p style="display: inline-block;width: 50%;padding-left: 5px">{{ord.name | titlecase}}</p>
+                <p style="display: inline-block;width: 10%;padding-left: 5px">{{ord.priceQuantity| currency: cafeInfo.currency :'symbol-narrow'}}</p>
+
+              </div>
+              <br>
+
+              <p style="padding-left: 20px;margin-top: 1px">{{ord.specialInstruction | titlecase}}</p>
+              <p style="padding-left: 20px;">{{ord.option.text | titlecase}}</p>
+              <div *ngFor="let extra of ord.extras">
+                <p style="padding-left: 20px">{{extra.text | titlecase}}</p>
+              </div>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+  </div>
+
+</div>
