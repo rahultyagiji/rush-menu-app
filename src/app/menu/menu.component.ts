@@ -69,6 +69,8 @@ export class MenuComponent implements OnInit {
 
   items: Observable<any[]>;
 
+  oldSessionData:{orderNo:string,totalPrice:string,order:Order[],cafe:string}[]=[];
+
   constructor(public route: ActivatedRoute,
               public router: Router,
               public fb: AngularFireDatabase,
@@ -166,12 +168,12 @@ export class MenuComponent implements OnInit {
           }})
       },300)
 
-    if (typeof sessionStorage.getItem("orderNo") != 'undefined' && sessionStorage.getItem("orderNo")!=null){
-      if(sessionStorage.getItem("cafe") == this.cafe)
+    this.oldSessionData = JSON.parse(sessionStorage.getItem("dataRush"))
+    if (this.oldSessionData.length>0){
+      if(this.oldSessionData[0].cafe === this.cafe)
       {
         this.ifOrderFound = true;
-        this.oldOrderCafeId = sessionStorage.getItem("cafe")
-        this.oldOrderPrice = sessionStorage.getItem("totalPrice")
+        this.oldOrderCafeId = this.oldSessionData[0].cafe
      }
       }
 
@@ -327,8 +329,8 @@ export class MenuComponent implements OnInit {
 
   viewOrderDetails(){
     this.openFilter=true;
-    this.oldOrderNumber = sessionStorage.getItem("orderNo")
-    this.oldOrderDetails = JSON.parse(sessionStorage.getItem("order"))
+    var oldSessionData = sessionStorage.getItem("dataRush")
+
   }
 
 }

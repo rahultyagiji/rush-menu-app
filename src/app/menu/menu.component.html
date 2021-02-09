@@ -111,14 +111,14 @@
   <i-bs name="X" style="color: black;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="closeFilter()"></i-bs>
   <!--      <span (click)="closeFilter()" class="cafeName" style="text-transform: capitalize">Close X</span>-->
   <!-- Modal content -->
-  <div class="modal-content" style="overflow: scroll;height: 60%;background-color: #F2F2F0">
-
+  <div class="modal-content" style="height: 60%;overflow: scroll;background-color: #F2F2F0">
+    <p style="font-size: 20px;font-weight: bold;color: #422039">Last Ordered</p>
+    <div *ngFor="let order of oldSessionData">
       <div  style="color: #422039">
-        <p style="font-size: 20px;font-weight: bold;color: #422039">Last Ordered</p>
-          <p>Order No: {{oldOrderNumber}}</p>
-          <p>Total: {{oldOrderPrice | currency: cafeInfo.currency :'symbol-narrow'}}</p>
-          <div style="height:300px;overflow-y: scroll">
-            <div *ngFor="let ord of oldOrderDetails;let i = index">
+          <p>Order No: {{order.orderNo}}</p>
+          <p>Total: {{order.totalPrice | currency: cafeInfo.currency :'symbol-narrow'}}</p>
+          <div style="height:80px;overflow-y: scroll">
+            <div *ngFor="let ord of order.order;let i = index">
               <div style="height: 30px">
                 <p style="display: inline-block;width: 5%;padding-left: 5px"> {{ord.quantity}}</p>
                 <p style="display: inline-block;width: 50%;padding-left: 5px">{{ord.name | titlecase}}</p>
@@ -134,8 +134,10 @@
               </div>
             </div>
 
-
         </div>
+        <p style="width: 100%;background-color: #888888;height: 2px"> </p>
+
+      </div>
 
 
 

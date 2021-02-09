@@ -111,10 +111,19 @@ export class OrderService {
             "tabChargeCode": tabCharge
           })
           .then((res) => {
-            sessionStorage.setItem( "orderNo" , a)
-            sessionStorage.setItem( "totalPrice" , totalPrice)
-            sessionStorage.setItem("order", JSON.stringify(order))
-            sessionStorage.setItem("cafe",cafe)
+            if(sessionStorage.getItem("dataRush")!='')
+            var b = JSON.parse(sessionStorage.getItem("dataRush"))
+
+            if(b.length > 0 && b[0].cafe==cafe){
+                b.push({orderNo:a,totalPrice:totalPrice,order:order,cafe : cafe})
+              sessionStorage.setItem("dataRush",JSON.stringify(b))
+            }
+            else{
+              var data : {orderNo:string,totalPrice:string,order:Order[],cafe:string}[]=[]
+                    data.push({orderNo:a,totalPrice:totalPrice,order:order,cafe : cafe})
+              sessionStorage.setItem("dataRush",JSON.stringify(data));
+            }
+
 
             this.toastr.success('Your order# is ' + a, 'Order Confirmed',{
               positionClass: 'toast-center-center',
