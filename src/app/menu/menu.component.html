@@ -96,8 +96,8 @@
     </div>
 
     <div class="footer"  *ngIf="order.length!=0" (click)="onClickCart()">
-      <p style="display: inline-block;width: 20%;padding-left: 10px">{{discountTotal$ | currency: cafeInfo.currency :'symbol-narrow'}}</p>
-      <p style="display: inline-block;text-align: right;width: 70%;padding-right: 10px">Confirm Order</p>
+      <p style="line-height: 30px;display: inline-block;width: 20%;padding-left: 10px">{{discountTotal$ | currency: cafeInfo.currency :'symbol-narrow'}}</p>
+      <p style="line-height: 30px;display: inline-block;text-align: right;width: 70%;padding-right: 10px">Confirm Order</p>
     </div>
 
   </div>
@@ -111,10 +111,12 @@
   <i-bs name="X" style="color: black;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="closeFilter()"></i-bs>
   <!--      <span (click)="closeFilter()" class="cafeName" style="text-transform: capitalize">Close X</span>-->
   <!-- Modal content -->
-  <div class="modal-content" style="overflow: scroll;height: 60%">
+  <div class="modal-content" style="overflow: scroll;height: 60%;background-color: #F2F2F0">
 
       <div  style="color: #422039">
+        <p style="font-size: 20px;font-weight: bold;color: #422039">Last Ordered</p>
           <p>Order No: {{oldOrderNumber}}</p>
+          <p>Total: {{oldOrderPrice | currency: cafeInfo.currency :'symbol-narrow'}}</p>
           <div style="height:300px;overflow-y: scroll">
             <div *ngFor="let ord of oldOrderDetails;let i = index">
               <div style="height: 30px">

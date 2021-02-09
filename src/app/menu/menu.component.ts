@@ -45,6 +45,7 @@ export class MenuComponent implements OnInit {
   public tableNum:string=""
   public tabChargeCode:string=""
 
+
   //screen size
   isMobile: boolean = false;
   width:number = window.innerWidth;
@@ -60,7 +61,11 @@ export class MenuComponent implements OnInit {
   ifOrderFound:boolean=false;
   oldOrderNumber:string=""
   oldOrderDetails: Order[]
+  oldOrderPrice:string=""
+  oldOrderCafeId:string=""
 
+  isCardAllowed:boolean=false;
+  isCashAllowed:boolean=false;
 
   items: Observable<any[]>;
 
@@ -93,11 +98,6 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
 
-
-    if (typeof sessionStorage.getItem("orderNo") !='undefined' && sessionStorage.getItem("orderNo")!=null){
-      this.ifOrderFound=true;
-    }
-
     this.width = window.innerWidth
     this.height = window.innerHeight
     this.isMobile = window.innerWidth < window.innerHeight;
@@ -111,6 +111,8 @@ export class MenuComponent implements OnInit {
     this.fb.list('businessName',ref => ref.orderByChild('cafeId').equalTo(this.cafe))
       .valueChanges().subscribe((res:Item[])=>{
       this.cafeInfo = res[0];
+      this.isCardAllowed = res[0].card;
+      this.isCashAllowed = res[0].cash;
       this.appService.setCafeInfo(this.cafeInfo)
       this.cafeName=res[0].name
       this.imgSrc =res[0].imgSrc
@@ -164,6 +166,14 @@ export class MenuComponent implements OnInit {
           }})
       },300)
 
+    if (typeof sessionStorage.getItem("orderNo") != 'undefined' && sessionStorage.getItem("orderNo")!=null){
+      if(sessionStorage.getItem("cafe") == this.cafe)
+      {
+        this.ifOrderFound = true;
+        this.oldOrderCafeId = sessionStorage.getItem("cafe")
+        this.oldOrderPrice = sessionStorage.getItem("totalPrice")
+     }
+      }
 
   }
 

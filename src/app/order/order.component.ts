@@ -35,6 +35,10 @@ export class OrderComponent implements OnInit {
   vtableNumber:string="";
   vTabChargeCode:string="";
 
+  isCardAllowed:boolean=false;
+  isCashAllowed:boolean=false;
+
+
   constructor(
     public orderService: OrderService,
     public appService: AppService,
@@ -54,6 +58,8 @@ export class OrderComponent implements OnInit {
       }
     }
     this.cafeInfo = this.appService.getCafeInfo();
+    this.isCardAllowed = this.appService.getCafeInfo().card;
+    this.isCashAllowed = this.appService.getCafeInfo().cash;
 
     this.orderSubscription = this.orderService.getOrder().subscribe((x) => {
       this.order = x;
@@ -129,7 +135,7 @@ export class OrderComponent implements OnInit {
     }
   };
 
-  confirmOrder(){
+  confirmCashOrder(){
     // if (!this.uid && this.order.length != 0) { if (this.guestUser) { this.uid = this.auth.getDeviceIdHash() } }
     var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, "",this.vTabChargeCode);
 
@@ -148,6 +154,9 @@ export class OrderComponent implements OnInit {
 
   }
 
+  confirmCardOrder(){
+
+ }
 
 
   goBack(){

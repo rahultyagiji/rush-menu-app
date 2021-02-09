@@ -92,10 +92,10 @@
   </div>
 
   <div class="md-form" style="height: 40px;top: 420px;position: fixed;width: 100%;" *ngIf="vTabChargeCode===''">
-  <p style="display: inline-block;width:44%;margin-left: 2%;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
-                                text-align: left;font-weight: bold;"> Table Number</p>
-  <input mdbInput placeholder="Enter Table Number" type="text" style="font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
-                                text-align: left;font-weight: bold;padding-left: 3%;display: inline-block;height: 40px;width: 45%;margin-left: 1%;border-radius: 10px" name="
+  <p style="display: inline-block;width:34%;margin-left: 2%;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: left;font-weight: bold;">Order For</p>
+  <input mdbInput placeholder="Table Number/ Name ..." type="text" style="font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: left;font-weight: bold;padding-left: 3%;display: inline-block;height: 40px;width: 55%;margin-left: 1%;border-radius: 10px" name="
 " [(ngModel)]="vtableNumber" id="form1" class="form-control">
     <!--    <label for="form1" class="">Enter Table Number</label>-->
 
@@ -113,8 +113,22 @@
 
 
 
-  <div class="footer" style="width: 100%">
-    <p style="width: 60%;margin-left: 30%" (click)="confirmOrder()">Confirm Order</p>
+  <div class="footer" style="text-align: center;width: 100%" *ngIf="isCashAllowed && !isCardAllowed">
+    <p style="line-height: 30px;" (click)="confirmCashOrder()">Confirm & Pay Later</p>
+  </div>
+
+
+  <div class="footer" style="text-align: center;width: 100%" *ngIf="!isCashAllowed && isCardAllowed">
+    <p style="line-height: 30px" (click)="confirmCardOrder()">Pay Now to Confirm</p>
+  </div>
+
+  <div class="footer" style="width: 100%" *ngIf="isCashAllowed && isCardAllowed">
+    <div style="text-align: center;height: 60px;width: 50%;display: inline-block;border-right-style: solid;border-right-color: #white;border-right-width: 2px">
+      <p style="line-height: 30px;width: 100%;display: inline-block" (click)="confirmCashOrder()">Confirm & Pay Later</p>
+    </div>
+    <div style="text-align: center;width: 45%;display: inline-block;">
+    <p style="line-height: 30px;width: 100%;display: inline-block" (click)="confirmCardOrder()">Pay Now & Confirm</p>
+  </div>
   </div>
 
  </div>

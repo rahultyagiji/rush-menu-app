@@ -82,7 +82,6 @@ export class OrderService {
 
   confirmOrder(order: Order[], cafe, payway, uid, location, totalPrice, discount, curr, arrival, tip, additiveTax, inclusiveTax, address, tabCharge) {
     if (this.order.length != 0) {
-      console.log(location)
 
       var time = Math.floor(Date.now() / 1000);
       var a = this.orderNo();
