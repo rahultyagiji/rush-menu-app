@@ -71,6 +71,7 @@ export class MenuComponent implements OnInit {
 
   oldSessionData:{orderNo:string,totalPrice:string,order:Order[],cafe:string}[]=[];
 
+
   constructor(public route: ActivatedRoute,
               public router: Router,
               public fb: AngularFireDatabase,
@@ -86,8 +87,10 @@ export class MenuComponent implements OnInit {
         this.tableNum = params['loc'];
         this.orderService.setTableNumber(params['loc'])
 
-        if (params['loc'].substring(0,3)=="tab"){
-          this.tabChargeCode = params['loc'].substring(0,3)
+        if(typeof params['loc'] != 'undefined') {
+          if (params['loc'].substring(0, 3) == "tab") {
+            this.tabChargeCode = params['loc'].substring(0, 3)
+          }
         }
       }
     );
@@ -169,7 +172,8 @@ export class MenuComponent implements OnInit {
       },300)
 
     this.oldSessionData = JSON.parse(sessionStorage.getItem("dataRush"))
-    if (this.oldSessionData.length>0){
+
+    if (this.oldSessionData!= null && this.oldSessionData.length>0){
       if(this.oldSessionData[0].cafe === this.cafe)
       {
         this.ifOrderFound = true;

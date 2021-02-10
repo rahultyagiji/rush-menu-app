@@ -91,14 +91,22 @@
 
   </div>
 
-  <div class="md-form" style="height: 40px;top: 420px;position: fixed;width: 100%;" *ngIf="vTabChargeCode===''">
+  <div class="md-form" style="height: 60px;top: 420px;position: fixed;width: 100%;" *ngIf="vTabChargeCode===''">
   <p style="display: inline-block;width:34%;margin-left: 2%;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
                                 text-align: left;font-weight: bold;">Order For</p>
   <input mdbInput placeholder="Table Number/ Name ..." type="text" style="font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
                                 text-align: left;font-weight: bold;padding-left: 3%;display: inline-block;height: 40px;width: 55%;margin-left: 1%;border-radius: 10px" name="
 " [(ngModel)]="vtableNumber" id="form1" class="form-control">
-    <!--    <label for="form1" class="">Enter Table Number</label>-->
 
+    <!--    <label for="form1" class="">Enter Table Number</label>-->
+    <div *ngIf="isPhoneRequired" style="margin-top: 5px">
+      <p style="display: inline-block;width:34%;margin-left: 2%;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: left;font-weight: bold;">Phone number</p>
+           <input mdbInput placeholder="04 XXX XXXXX" type="text" style="font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: left;font-weight: bold;padding-left: 3%;display: inline-block;height: 40px;width: 55%;margin-left: 1%;border-radius: 10px" name="
+                                " [(ngModel)]=" deliveryDetails.deliveryPhone" id="form1" class="form-control">
+
+    </div>
  </div>
 
   <div class="md-form" style="height: 40px;top: 420px;position: fixed;width: 100%;" *ngIf="vTabChargeCode!=''">
@@ -110,6 +118,7 @@
     <!--    <label for="form1" class="">Enter Table Number</label>-->
 
   </div>
+
 
 
 

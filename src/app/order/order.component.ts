@@ -37,6 +37,8 @@ export class OrderComponent implements OnInit {
 
   isCardAllowed:boolean=false;
   isCashAllowed:boolean=false;
+  isPhoneRequired:boolean=true;
+  deliveryDetails: { "deliveryAddress": string, "deliveryPhone": string } = { deliveryAddress: "", deliveryPhone: "" }
 
 
   constructor(
@@ -53,6 +55,8 @@ export class OrderComponent implements OnInit {
     if(typeof this.orderService.getTableNumber() != 'undefined')
     this.vtableNumber = this.orderService.getTableNumber()
     if(this.vtableNumber!='') {
+      console.log(this.vtableNumber)
+      this.isPhoneRequired =false;
       if (this.vtableNumber.substring(0, 3) == "tab") {
         this.vTabChargeCode = this.vtableNumber;
       }
@@ -135,11 +139,12 @@ export class OrderComponent implements OnInit {
     }
   };
 
-  confirmCashOrder(){
-    // if (!this.uid && this.order.length != 0) { if (this.guestUser) { this.uid = this.auth.getDeviceIdHash() } }
-    var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, "",this.vTabChargeCode);
+  confirmCashOrder() {
+    if (this.deliveryDetails.deliveryPhone.match(/^\D*0(\D*\d){9}\D*$/)) {
+      // if (!this.uid && this.order.length != 0) { if (this.guestUser) { this.uid = this.auth.getDeviceIdHash() } }
+      var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, this.vTabChargeCode);
 
-      setTimeout(()=>{
+      setTimeout(() => {
         this.zeroQuantityReturn = true;
         this.order.length = 0;
         this.total$ = 0;
@@ -150,8 +155,11 @@ export class OrderComponent implements OnInit {
         this.inclusiveTax = "0";
         this.grandTotal = 0;
         this._location.back();
-      },3000)
+      }, 3000)
+    } else {
+      alert("Please provide a valid phone number for takeaway orders")
 
+    }
   }
 
   confirmCardOrder(){
