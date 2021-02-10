@@ -55,7 +55,6 @@ export class OrderComponent implements OnInit {
     if(typeof this.orderService.getTableNumber() != 'undefined')
     this.vtableNumber = this.orderService.getTableNumber()
     if(this.vtableNumber!='') {
-      console.log(this.vtableNumber)
       this.isPhoneRequired =false;
       if (this.vtableNumber.substring(0, 3) == "tab") {
         this.vTabChargeCode = this.vtableNumber;
@@ -140,9 +139,9 @@ export class OrderComponent implements OnInit {
   };
 
   confirmCashOrder() {
-    if (this.deliveryDetails.deliveryPhone.match(/^\D*0(\D*\d){9}\D*$/)) {
-      // if (!this.uid && this.order.length != 0) { if (this.guestUser) { this.uid = this.auth.getDeviceIdHash() } }
-      var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, this.vTabChargeCode);
+    if(this.vtableNumber!=''){
+      //for specific link orders whether tab or others like table
+      var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, "", this.vtableNumber);
 
       setTimeout(() => {
         this.zeroQuantityReturn = true;
@@ -156,9 +155,28 @@ export class OrderComponent implements OnInit {
         this.grandTotal = 0;
         this._location.back();
       }, 3000)
-    } else {
-      alert("Please provide a valid phone number for takeaway orders")
+    }
+    else {
+      if (this.deliveryDetails.deliveryPhone.match(/^\D*0(\D*\d){9}\D*$/)) {
+        // if (!this.uid && this.order.length != 0) { if (this.guestUser) { this.uid = this.auth.getDeviceIdHash() } }
+        var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, this.vtableNumber);
 
+        setTimeout(() => {
+          this.zeroQuantityReturn = true;
+          this.order.length = 0;
+          this.total$ = 0;
+          this.discountTotal$ = 0;
+          this.totalCharge$ = 0;
+          this.tipAmount = 0;
+          this.additiveTax = "0";
+          this.inclusiveTax = "0";
+          this.grandTotal = 0;
+          this._location.back();
+        }, 3000)
+      } else {
+        alert("Please provide a valid phone number for takeaway orders")
+
+      }
     }
   }
 
