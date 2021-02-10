@@ -134,13 +134,36 @@
   </div>
 
   <div class="footer" style="width: 100%" *ngIf="isCashAllowed && isCardAllowed">
-    <div style="text-align: center;height: 60px;width: 50%;display: inline-block;border-right-style: solid;border-right-color: #white;border-right-width: 2px">
+    <div style="text-align: center;height: 60px;width: 45%;display: inline-block;border-right-style: solid;border-right-color: #white;border-right-width: 2px">
       <p style="line-height: 30px;width: 100%;display: inline-block" (click)="confirmCashOrder()">Confirm & Pay Later</p>
     </div>
     <div style="text-align: center;width: 45%;display: inline-block;">
     <p style="line-height: 30px;width: 100%;display: inline-block" (click)="confirmCardOrder()">Pay Now & Confirm</p>
   </div>
   </div>
+
+
+  <!-- The Modal -->
+  <div id="myModal" class="modal" *ngIf="paymentModal" >
+    <i-bs name="X" style="color: black;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="closePaymentModal()"></i-bs>
+    <!--      <span (click)="closeFilter()" class="cafeName" style="text-transform: capitalize">Close X</span>-->
+    <!-- Modal content -->
+    <div class="modal-content" style="overflow: scroll;height: 200px;margin-left: 20px">
+<!--      <h2>Create Token Example</h2>-->
+      <ngx-stripe-card
+        [options]="cardOptions"
+        [elementsOptions]="elementsOptions"
+      ></ngx-stripe-card>
+      <div class="spinner" *ngIf="showSpinner"></div>
+      <div style="align-content: center;text-align: center">
+      <p  (click)="createToken()" style="margin-top:80px;color: white;background-color: #E12842;width: 100%;line-height: 30px">
+        Pay {{grandTotal | currency: cafeInfo.currency :'symbol-narrow'}}
+      </p>
+      </div>
+    </div>
+
+  </div>
+
 
  </div>
 

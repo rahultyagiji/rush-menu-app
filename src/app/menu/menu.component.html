@@ -8,15 +8,16 @@
     <br/>
   </div>
 <!--</div>-->
+  <div>
    <img [src]="imgSrc"
-       style="height:200px;width: 100vw">
+       style="height:200px;width: 100vw" *ngIf="showimage">
 
 
   <div style="width: 100%;height: 30px;left: 0px;background: #422039;" >
     <span style="margin-left: 3%;margin-top: 5px;color: white;font-size: 18px;font-weight: bold"> {{vtext | titlecase}}</span>
     <i-bs name="filter" style="color: white;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="clickFilter()"></i-bs>
   </div>
-
+  </div>
 
   <!-- The Modal -->
   <div id="myModal" class="modal" *ngIf="openFilter" >
@@ -107,7 +108,7 @@
 
 
 <!-- The Modal -->
-<div id="orderModal" class="modal" *ngIf="openFilter">
+<div id="orderModal" class="modal" *ngIf="openOrderHistory">
   <i-bs name="X" style="color: black;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="closeFilter()"></i-bs>
   <!--      <span (click)="closeFilter()" class="cafeName" style="text-transform: capitalize">Close X</span>-->
   <!-- Modal content -->

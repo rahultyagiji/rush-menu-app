@@ -80,7 +80,7 @@ export class OrderService {
     }
 
 
-  confirmOrder(order: Order[], cafe, payway, uid, location, totalPrice, discount, curr, arrival, tip, additiveTax, inclusiveTax, address, tabCharge) {
+  confirmOrder(order: Order[], cafe, payway, uid, location, totalPrice, paymentBalance, discount, curr, arrival, tip, additiveTax, inclusiveTax, address, tabCharge) {
     if (this.order.length != 0) {
 
       var time = Math.floor(Date.now() / 1000);
@@ -99,7 +99,7 @@ export class OrderService {
             "orderNo2": a,
             "timestamp": time,
             "totalPrice": totalPrice,
-            "paymentBalance": totalPrice,
+            "paymentBalance": paymentBalance,
             "payway": "Cash",
             "discount": discount,
             "currency": curr,
@@ -111,12 +111,14 @@ export class OrderService {
             "tabChargeCode": tabCharge
           })
           .then((res) => {
-            if(sessionStorage.getItem("dataRush")!='')
-            var b = JSON.parse(sessionStorage.getItem("dataRush"))
 
-            if(b.length > 0 && b[0].cafe==cafe){
-                b.push({orderNo:a,totalPrice:totalPrice,order:order,cafe : cafe})
-              sessionStorage.setItem("dataRush",JSON.stringify(b))
+            if(sessionStorage.getItem("dataRush")!= null) {
+              var b = JSON.parse(sessionStorage.getItem("dataRush"))
+
+              if (b.length > 0 && b[0].cafe == cafe) {
+                b.push({orderNo: a, totalPrice: totalPrice, order: order, cafe: cafe})
+                sessionStorage.setItem("dataRush", JSON.stringify(b))
+              }
             }
             else{
               var data : {orderNo:string,totalPrice:string,order:Order[],cafe:string}[]=[]

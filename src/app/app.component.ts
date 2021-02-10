@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {ConfigService} from './config.service';
 
 
 @Component({
@@ -12,9 +13,11 @@ export class AppComponent implements OnInit{
 
   public cafeId:string="";
 
-  constructor(private router:Router){}
+  constructor(private router:Router,
+               private configService: ConfigService ){}
 
   ngOnInit(): void {
+    this.configService.setConfig();
   }
 
 

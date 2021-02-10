@@ -10,6 +10,14 @@ import set = Reflect.set;
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  StripeCardElementOptions,
+  StripeElementsOptions
+} from '@stripe/stripe-js';
+import {StripeService, StripeCardComponent} from 'ngx-stripe';
+import {ConfigService} from '../config.service';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-order',
@@ -17,7 +25,31 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
+  @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
+  cardOptions: StripeCardElementOptions = {
+    style: {
+      base: {
+        iconColor:'#422039',
+        color: '#422039',
+        fontWeight: '300',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSize: '16px',
+        lineHeight: '40px',
+        '::placeholder': {
+          color: '#bec6cf'
+        }
+      }
+    },
+    hidePostalCode : true,
+    iconStyle : 'solid'
+  };
+
+  elementsOptions: StripeElementsOptions = {
+    locale: 'en'
+  };
+
+  // stripeTest: FormGroup;
 
   cafeInfo:Item
 
@@ -39,14 +71,18 @@ export class OrderComponent implements OnInit {
   isCashAllowed:boolean=false;
   isPhoneRequired:boolean=true;
   deliveryDetails: { "deliveryAddress": string, "deliveryPhone": string } = { deliveryAddress: "", deliveryPhone: "" }
-
+  paymentModal:boolean=false;
+  showSpinner:boolean=false;
 
   constructor(
     public orderService: OrderService,
     public appService: AppService,
     public router: Router,
     private _location: Location,
-    private   toastr: ToastrService
+    private   toastr: ToastrService,
+    private stripeService: StripeService,
+    private configService: ConfigService,
+    private http: HttpClient
 
   ) { }
 
@@ -69,6 +105,10 @@ export class OrderComponent implements OnInit {
       this.totalPrice(this.order);
     });
 
+    //
+    // this.stripeTest = this.fb.group({
+    //   name: ['', [Validators.required]]
+    // });
 
   }
 
@@ -141,7 +181,7 @@ export class OrderComponent implements OnInit {
   confirmCashOrder() {
     if(this.vtableNumber!='' || this.vTabChargeCode != ''){
       //for specific link orders whether tab or others like table
-      var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, this.vTabChargeCode);
+      var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, this.vTabChargeCode);
 
       setTimeout(() => {
         this.zeroQuantityReturn = true;
@@ -159,7 +199,7 @@ export class OrderComponent implements OnInit {
     else {
       if (this.deliveryDetails.deliveryPhone.match(/^\D*0(\D*\d){9}\D*$/)) {
         // if (!this.uid && this.order.length != 0) { if (this.guestUser) { this.uid = this.auth.getDeviceIdHash() } }
-        var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, "");
+        var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, "");
 
         setTimeout(() => {
           this.zeroQuantityReturn = true;
@@ -175,14 +215,30 @@ export class OrderComponent implements OnInit {
         }, 3000)
       } else {
         alert("Please provide a valid phone number for takeaway orders")
-
       }
     }
   }
 
   confirmCardOrder(){
+    if(this.vtableNumber!='' || this.vTabChargeCode != '') {
+      //for specific link orders whether tab or others like table
+      this.paymentModal=true;
+    }
+    else{
+      if (this.deliveryDetails.deliveryPhone.match(/^\D*0(\D*\d){9}\D*$/)) {
+        this.paymentModal=true;
+      }
+      else{
+        alert("Please provide a valid phone number for takeaway orders")
+      }
+
+    }
 
  }
+  closePaymentModal(){
+    this.paymentModal=false;
+
+  }
 
 
   goBack(){
@@ -190,4 +246,52 @@ export class OrderComponent implements OnInit {
 
   }
 
-}
+
+  createToken(): void {
+    this.showSpinner = true;
+
+      this.stripeService
+        .createToken(this.card.element, { })
+        .subscribe((result) => {
+          // charge
+          if (result.token) {
+            this.http.request("POST",
+              this.configService.getChargeWithCreditCardFunctionUrl(),
+              {
+                body: {
+                  "function": "chargeWithCreditCard", "aID": this.cafeInfo.aID, "source": result.token.id,
+                  "amount": this.grandTotal*100, "chargeAmount": this.grandTotal*100, "currency": this.cafeInfo.currency
+                },
+                headers: {"Content-Type": "application/json"},
+              })
+              .subscribe((res) => {
+                this.showSpinner=false;
+                var obj = res;
+                if(res.statusCode == 200)
+                {
+                  var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, 0, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, this.vTabChargeCode);
+                  setTimeout(() => {
+                    this.zeroQuantityReturn = true;
+                    this.order.length = 0;
+                    this.total$ = 0;
+                    this.discountTotal$ = 0;
+                    this.totalCharge$ = 0;
+                    this.tipAmount = 0;
+                    this.additiveTax = "0";
+                    this.inclusiveTax = "0";
+                    this.grandTotal = 0;
+                    this._location.back();
+                  }, 3000)
+                }
+                else{
+                  alert('Please check your credit card details')
+                }
+
+              })
+          }
+        })
+
+    }
+
+  }
+

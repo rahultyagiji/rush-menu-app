@@ -15,7 +15,7 @@ import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
-import {FormsModule} from '@angular/forms';
+import {FormBuilder, FormsModule} from '@angular/forms';
 import { ComponentsmodalMenuComponent } from './componentsmodal-menu/componentsmodal-menu.component';
 import {MatDialogModule,MatDialogRef} from '@angular/material/dialog';
 import {MatRadioModule} from '@angular/material/radio';
@@ -24,13 +24,15 @@ import { MatListModule } from '@angular/material/list';
 
 import { OrderComponent } from './order/order.component';
 import { ToastrModule } from 'ngx-toastr';
+import {NgxStripeModule} from 'ngx-stripe';
+import {ConfigService} from './config.service';
+import {HttpClientModule} from '@angular/common/http';
 const icons = {
   Alarm,
   Filter,
   X,
   CartFill
 };
-
 
 
 
@@ -53,11 +55,13 @@ const icons = {
     MatDialogModule,
     MatRadioModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    NgxStripeModule.forRoot(environment.stripeKey),
+    HttpClientModule
   ],
   providers: [AngularFirestore,    {
     provide: MatDialogRef,
-    useValue: {}}],
+    useValue: {}}, ConfigService],
   bootstrap: [AppComponent],
   entryComponents:[ComponentsmodalMenuComponent]
 })

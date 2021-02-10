@@ -11,5 +11,6 @@ export const environment = {
        storageBucket: "foodapp-test-33e41.appspot.com",
        messagingSenderId: "862479576708",
        appId: "1:862479576708:web:31f5b41ab592f708779cd1"
-  }
+  },
+  stripeKey:"pk_test_Ho194krCpYzjoVyqgk1r1IiZ00Fbbr20dX"
 };

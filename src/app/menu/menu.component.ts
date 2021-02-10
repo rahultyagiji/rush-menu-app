@@ -53,6 +53,7 @@ export class MenuComponent implements OnInit {
   mobileWidth:number  = 500;
   currency:string="USD";
   deviceInfo = null;
+  openOrderHistory:boolean=false;
 
   order: Order[] = [];
   total$: number = 0;
@@ -105,7 +106,8 @@ export class MenuComponent implements OnInit {
 
     this.width = window.innerWidth
     this.height = window.innerHeight
-    this.isMobile = window.innerWidth < window.innerHeight;
+    console.log(window.innerWidth,window.innerHeight)
+    this.isMobile = window.innerWidth < this.mobileWidth;
     if (!this.isMobile) {
       this.showimage = false;
     } else {
@@ -193,6 +195,7 @@ export class MenuComponent implements OnInit {
   }
   closeFilter(){
     this.openFilter=false;
+    this.openOrderHistory=false;
   }
 
   filterCat(cat){
@@ -332,7 +335,7 @@ export class MenuComponent implements OnInit {
 
 
   viewOrderDetails(){
-    this.openFilter=true;
+    this.openOrderHistory=true;
     var oldSessionData = sessionStorage.getItem("dataRush")
 
   }

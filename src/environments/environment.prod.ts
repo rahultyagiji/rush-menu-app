@@ -10,5 +10,6 @@ export const environment = {
      storageBucket: "rush-app1.appspot.com",
      messagingSenderId: "471516460614",
      appId: "1:471516460614:web:3adca996322fe1a61ebc47"
-  }
+  },
+  stripeKey: "pk_live_riAK8Uz2H6P2l2yvrkt5lbMo00zvSGXA4y"
 };
