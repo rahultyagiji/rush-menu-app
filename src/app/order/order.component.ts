@@ -263,10 +263,10 @@ export class OrderComponent implements OnInit {
                 },
                 headers: {"Content-Type": "application/json"},
               })
-              .subscribe((res) => {
+              .subscribe((res:{statusCode:number,body:{error:string}}) => {
                 this.showSpinner=false;
-                var obj = res;
-                if(res.statusCode == 200)
+                console.log(res)
+                if(res.statusCode ==200)
                 {
                   var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, 0, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, this.vTabChargeCode);
                   setTimeout(() => {
@@ -283,7 +283,7 @@ export class OrderComponent implements OnInit {
                   }, 3000)
                 }
                 else{
-                  alert('Please check your credit card details')
+                  alert(res.body.error)
                 }
 
               })
