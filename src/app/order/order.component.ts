@@ -109,7 +109,6 @@ export class OrderComponent implements OnInit {
     // this.stripeTest = this.fb.group({
     //   name: ['', [Validators.required]]
     // });
-
   }
 
   totalPrice(order: Order[]) {

@@ -106,7 +106,6 @@ export class MenuComponent implements OnInit {
 
     this.width = window.innerWidth
     this.height = window.innerHeight
-    console.log(window.innerWidth,window.innerHeight)
     this.isMobile = window.innerWidth < this.mobileWidth;
     if (!this.isMobile) {
       this.showimage = false;
@@ -261,7 +260,8 @@ export class MenuComponent implements OnInit {
       }
     dialogConfig.data = {
       menu:this.menuDisplay[i],
-      isOnboarded:this.cafeInfo.onboarded
+      isOnboarded:this.cafeInfo.onboarded,
+      isAvailable:this.cafeInfo.available
     }
     const modalDialog = this.matDialog.open(ComponentsmodalMenuComponent, dialogConfig)
 

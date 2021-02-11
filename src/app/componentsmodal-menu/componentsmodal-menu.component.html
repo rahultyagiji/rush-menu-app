@@ -1,7 +1,7 @@
 <div  style="background-color: white;height:500px;color: #422039">
   <div style="width: 100%;background-color:#422039;color: white;height: 40px;font-weight:  bold">
-    <p class="center" style="width: 90%;display: inline-block;margin-left: 5px">{{menu.name}}</p>
-    <p style="display: inline-block;vertical-align: top" (click)="closeModal('0')">X</p>
+    <p class="center" style="width: 80%;display: inline-block;margin-left: 5px;overflow: hidden;text-overflow: ellipsis">{{menu.name}}</p>
+    <p style="display: inline-block;vertical-align: top;width: 10%;text-align: right" (click)="closeModal('0')">X</p>
   </div>
   <div>
     <p class="center_desc">{{menu.description}}</p>
@@ -34,18 +34,21 @@
   </div>
   </div>
 
-  <div class="md-form" style="height: 80px" *ngIf="isOnboarded">
+  <div class="md-form" style="height: 80px" *ngIf="isOnboarded && isCafeAvailable">
     <input mdbInput placeholder="Special Instructions" type="text" style="height: 40px;width: 96%;margin-left: 1%;border-radius: 10px" name="vtableNumber" [(ngModel)]="vSpecialInstructions" id="form1" class="form-control">
     <!--    <label for="form1" class="">Enter Table Number</label>-->
 
   </div>
 
 
-    <div *ngIf="isOnboarded && menu.available"
-      (click)="addItem()" style="height: 30px;width: 100%;background-color: #7AAD0A;text-align: center;color: white"
-    >Add to Cart </div>
+    <div *ngIf="isOnboarded && menu.available && isCafeAvailable"
+      (click)="addItem()" style="line-height: 30px;height: 30px;width: 100%;background-color: #7AAD0A;text-align: center;color: white;vertical-align: middle"
+    ><p>Add to Cart </p></div>
 
-  <div *ngIf="isOnboarded && !menu.available" style="height: 30px;width: 100%;background-color: #7AAD0A;text-align: center;color: white"
-  >Item is currently unavailable </div>
+  <div *ngIf="isOnboarded && !menu.available" style="line-height: 30px;height: 30px;width: 100%;background-color: #7AAD0A;text-align: center;color: white;vertical-align: middle"
+  ><p>Item is currently unavailable </p></div>
+
+  <div *ngIf="!isCafeAvailable" style="line-height: 30px;height: 30px;width: 100%;background-color: #7AAD0A;text-align: center;color: white;vertical-align: middle"
+  >Cafe is currently unavailable </div>
 
 </div>

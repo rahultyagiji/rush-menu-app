@@ -13,6 +13,7 @@ export class ComponentsmodalMenuComponent implements OnInit {
 
   menu:MenuDisplay;
   isOnboarded:boolean;
+  isCafeAvailable:boolean;
   vSpecialInstructions:string="";
   selectionOption:string=""
   optionText: string="";
@@ -29,6 +30,7 @@ export class ComponentsmodalMenuComponent implements OnInit {
   ngOnInit(): void {
     this.menu=this.modalData.menu
     this.isOnboarded=this.modalData.isOnboarded
+    this.isCafeAvailable = this.modalData.isAvailable
     if(typeof this.menu.extra!='undefined')
     {
       for(var i=0; i<this.menu.extra.length;i++){
