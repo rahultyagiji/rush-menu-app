@@ -219,6 +219,7 @@ export class OrderComponent implements OnInit {
   }
 
   confirmCardOrder(){
+
     if(this.vtableNumber!='' || this.vTabChargeCode != '') {
       //for specific link orders whether tab or others like table
       this.paymentModal=true;
@@ -265,7 +266,6 @@ export class OrderComponent implements OnInit {
               })
               .subscribe((res:{statusCode:number,body:{error:string}}) => {
                 this.showSpinner=false;
-                console.log(res)
                 if(res.statusCode ==200)
                 {
                   var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, 0, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, this.vTabChargeCode);

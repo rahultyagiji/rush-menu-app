@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {Menu, MenuDisplay} from '../datatypes/menu';
-import {MatRadioModule} from '@angular/material/radio';
+import { MenuDisplay} from '../datatypes/menu';
 
 
 @Component({
@@ -31,6 +30,8 @@ export class ComponentsmodalMenuComponent implements OnInit {
     this.menu=this.modalData.menu
     this.isOnboarded=this.modalData.isOnboarded
     this.isCafeAvailable = this.modalData.isAvailable
+
+
     if(typeof this.menu.extra!='undefined')
     {
       for(var i=0; i<this.menu.extra.length;i++){
@@ -65,7 +66,20 @@ export class ComponentsmodalMenuComponent implements OnInit {
     }
   }
   addItem(){
-    this.closeModal('1');
+    if(typeof this.menu.option !='undefined') {
+      if (this.menu.option.length > 0) {
+          if (this.optionText!=''){
+            this.closeModal('1');
+          }
+          else{
+            alert("Please select an option")
+          }
+      }
+    }
+    else{
+      this.closeModal('1');
+    }
+
   }
 
   showValuePromptText(option, args){
