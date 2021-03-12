@@ -17,6 +17,7 @@ export class Item {
   tip:boolean
   delivery:{"delivery":boolean,"fees":string,"distance":number}
   onboarded:boolean
+  tabList:{"name":string,"pin":string}[]
 
   constructor(options) {
     this.cafeId = options.cafeId;
@@ -36,7 +37,8 @@ export class Item {
     this.discount = options.discount;
     this.tip    = options.tip
     this.delivery = options.delivery
-    this.onboarded =options.onboarded
+    this.onboarded = options.onboarded
+    this.tabList = options.tabList;
 
   }
 

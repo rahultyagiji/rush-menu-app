@@ -65,8 +65,14 @@ export class MenuComponent implements OnInit {
   oldOrderPrice:string=""
   oldOrderCafeId:string=""
 
-  isCardAllowed:boolean=false;
-  isCashAllowed:boolean=false;
+  isCardAllowed:boolean = false;
+  isCashAllowed:boolean = false;
+  isPinProvided:boolean = false;
+  isPinNotMatching:boolean = false;
+  tabPin:string="";
+  tabCode:string=""
+  tabPinInput:string="";
+
 
   items: Observable<any[]>;
 
@@ -89,9 +95,10 @@ export class MenuComponent implements OnInit {
         this.orderService.setTableNumber(params['loc'])
 
         if(typeof params['loc'] != 'undefined') {
-          if (params['loc'].substring(0, 3) == "tab") {
             this.tabChargeCode = params['loc'].substring(0, 3)
-          }
+        }
+        else {
+          this.isPinProvided = true;
         }
       }
     );
@@ -122,6 +129,25 @@ export class MenuComponent implements OnInit {
       this.appService.setCafeInfo(this.cafeInfo)
       this.cafeName=res[0].name
       this.imgSrc =res[0].imgSrc
+      if(typeof res[0].tabList != "undefined"){
+
+        var a = false;
+        res[0].tabList.forEach((x)=>{
+          if(this.tabChargeCode === x.name){
+            this.tabPin = x.pin
+            a = true;
+          }
+        })
+        if(!a){
+          this.isPinProvided = true;
+        }
+
+
+      }
+      else{
+        this.isPinProvided=true;
+      }
+
     })
 
     this.fb.list<Menu>(ref).valueChanges().subscribe((res) => {
@@ -181,6 +207,10 @@ export class MenuComponent implements OnInit {
         this.oldOrderCafeId = this.oldSessionData[0].cafe
      }
       }
+
+    if(!this.isPinProvided){
+      this.isPinProvided =  this.orderService.fetchPin()
+    }
 
   }
 
@@ -288,6 +318,7 @@ export class MenuComponent implements OnInit {
   }
 
   onClickCart(){
+    this.orderService.setPin(this.isPinProvided)
     this.router.navigate(['order']);
   }
 
@@ -340,5 +371,15 @@ export class MenuComponent implements OnInit {
 
   }
 
+
+  checkTabPin(){
+    if(this.tabPin == this.tabPinInput && this.tabPin != ''){
+      this.isPinProvided = true;
+      this.isPinNotMatching = false;
+    }
+    else{
+        this.isPinNotMatching = true;
+    }
+  }
 }
 

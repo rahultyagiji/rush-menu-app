@@ -11,6 +11,8 @@
    <img [src]="imgSrc"
         style="height:200px;width: 100vw" *ngIf="showimage">
 
+  <div *ngIf="isPinProvided">
+
   <div style="line-height: 30px;width: 100%;height: 30px;left: 0px;background: #422039;" >
     <span style="margin-left: 3%;margin-top: 5px;color: white;font-size: 18px;font-weight: bold"> {{vtext | titlecase}}</span>
     <i-bs name="filter" style="color: white;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="clickFilter()"></i-bs>
@@ -102,11 +104,24 @@
 
 </div>
 
+  <div *ngIf="!isPinProvided" style="height: 500px;margin-left: 10px">
 
+    <p>Provide PIN for Tab</p>
+    <div style="display: flex; align-items: middle;">
+
+    <input mdbInput placeholder="" type="text" style="font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+                                text-align: left;font-weight: bold;padding-left: 3%;display: inline-block;height: 40px;width: 55%;margin-left: 1%;border-radius: 10px" name="
+                                " [(ngModel)]="tabPinInput" id="form1" class="form-control">
+    <i-bs name="Check" style="margin-left: 10px;color: #7AAD0A;font-size: 42px;cursor: pointer" (click)="checkTabPin()"></i-bs>
+    </div>
+    <p style="font-size: 12px;color: #E12842;font-style: italic" *ngIf="isPinNotMatching">Please check pin and try again</p>
+  </div>
+
+</div>
 
 <!-- The Modal -->
 <div id="orderModal" class="modal" *ngIf="openOrderHistory">
-  <i-bs name="X" style="color: black;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="closeFilter()"></i-bs>
+  <i-bs name="X" style="color: black;float: right;margin-right: 10px;font-size: 32px;font-weight: bold;cursor: pointer" (click)="closeFilter()"></i-bs>
   <!--      <span (click)="closeFilter()" class="cafeName" style="text-transform: capitalize">Close X</span>-->
   <!-- Modal content -->
   <div class="modal-content" style="height: 60%;overflow: scroll;background-color: #F2F2F0">

@@ -15,6 +15,7 @@ export class OrderService {
   priceQuantity: string = "0";
   order: Order[] = [];
   tableNumber: string = "";
+  isPinProvided:boolean=false;
 
   private _order = new BehaviorSubject<Order[]>([]);
 
@@ -155,5 +156,13 @@ export class OrderService {
   getTableNumber()
   {
     return   this.tableNumber
+  }
+
+  setPin(a){
+  this.isPinProvided = a;
+  }
+
+  fetchPin(){
+    return this.isPinProvided;
   }
 }
