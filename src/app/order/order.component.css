@@ -1,7 +1,9 @@
 .topBox{
-   position: absolute;
+  position: absolute;
+  text-align: center;
    width: 100%;
    height: 40px;
+  line-height: 40px;
    left: 0px;
    top: 0px;
    background: #F2F2F0;
@@ -16,24 +18,39 @@
   background: #F2F2F0;
 }
 
-
 .cafeName{
-  position: absolute;
+  width: 100%;
   height: 30.29px;
   top: 13.88px;
-  line-height: 23px;
-  width: 80%;
   font-weight: bold;
   font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   font-size: 20px;
+  line-height: 23px;
   text-align: center;
   letter-spacing: 0.01em;
 
   color: #422039;
 }
 
+.goBack{
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  top: 5px;
+  left: 0px;
+  font-weight: bold;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  letter-spacing: 0.01em;
+
+  color: #422039;
+}
 
 .footer {
   height:60px;

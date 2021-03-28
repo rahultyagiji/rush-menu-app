@@ -2,9 +2,9 @@
 <div  style="color: #422039" >
 
   <div class="topBox">
+    <i-bs name="cart-fill" class="cart vibrateAnimation" style=";width: 15%;color: #7AAD0A" *ngIf="ifOrderFound"
+          (click)="viewOrderDetails()"></i-bs>
     <span class="cafeName" style="text-transform: capitalize;width:80%">{{ cafeName }}</span>
-    <i-bs name="cart-fill" class="cafeName vibrateAnimation" style="width: 15%;color: #7AAD0A" *ngIf="ifOrderFound"
-    (click)="viewOrderDetails()"></i-bs>
     <br/>
   </div>
 <!--</div>-->
@@ -62,13 +62,13 @@
     </div>
   </div>
 
-  <div class="md-form" style="height: 60px;margin-top: 5px" >
-    <input mdbInput placeholder="Search your favourite item..." type="text" style="height: 40px;width: 96%;margin-left: 1%;border-radius: 10px" name="vSearchText" [(ngModel)]="vSearchText" id="form1" class="form-control"
+  <div class="md-form" style="height: 60px;margin-top: 25px" >
+    <input mdbInput placeholder="Search your favourite item..." type="text" style="height: 40px;width: 90%;margin-left: 5%;border-radius: 10px" name="vSearchText" [(ngModel)]="vSearchText" id="form1" class="form-control"
     (ngModelChange)="searchMenuItem()">
     <!--    <label for="form1" class="">Enter Table Number</label>-->
   </div>
 
-  <div   *ngIf="!detailsObtained" style="height: 500px;overflow: scroll">
+  <div   *ngIf="!detailsObtained" style="height: auto;overflow: scroll">
     <div *ngFor="let menu of menuDisplay; let i = index" style="">
       <div  class="{{ i%2==0 ? 'evenStyle' : 'oddStyle' }}">
 

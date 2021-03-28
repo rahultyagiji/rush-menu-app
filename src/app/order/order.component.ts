@@ -155,6 +155,10 @@ export class OrderComponent implements OnInit {
       this.totalPrice(this.order);
       this.deleteQuantityZero();
       this.orderService.setOrder(this.order);
+      this.toastr.success('item removed','',{
+        positionClass: 'toast-center-center',
+        timeOut: 1000
+      });
       // this.cartEmpty.emit(true);
     }
     else {

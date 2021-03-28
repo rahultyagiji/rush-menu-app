@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MenuDisplay} from '../datatypes/menu';
+import {ToastrService} from 'ngx-toastr';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class ComponentsmodalMenuComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ComponentsmodalMenuComponent>,
     @Inject(MAT_DIALOG_DATA) private modalData: any,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -70,6 +72,10 @@ export class ComponentsmodalMenuComponent implements OnInit {
       if (this.menu.option.length > 0) {
           if (this.optionText!=''){
             this.closeModal('1');
+            this.toastr.success('item added','',{
+              positionClass: 'toast-center-center',
+              timeOut: 1000
+            });
           }
           else{
             alert("Please select an option")
