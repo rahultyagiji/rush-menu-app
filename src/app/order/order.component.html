@@ -1,4 +1,4 @@
-<div  style="color: #422039">
+<div  style="color: #422039;overflow: scroll">
   <div class="topBox">
     <span class="goBack" style="text-align: left;font-size: 28px;margin-left: 5px" (click)="goBack()"><</span>
     <span class="cafeName" style="text-transform: capitalize;">{{ cafeInfo.name }}</span>
@@ -91,7 +91,7 @@
 
   </div>
 
-  <div class="md-form" style="height: 60px;top: 420px;position: fixed;width: 100%;" *ngIf="vTabChargeCode===''">
+  <div class="md-form" style="height: 80px;top: 420px;position: fixed;width: 100%;overflow-y: scroll" *ngIf="vTabChargeCode===''">
   <p style="display: inline-block;width:34%;margin-left: 2%;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
                                 text-align: left;font-weight: bold;">Order For</p>
   <input mdbInput placeholder="Table Number/ Name ..." type="text" style="font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;

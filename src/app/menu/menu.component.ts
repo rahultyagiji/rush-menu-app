@@ -134,6 +134,7 @@ export class MenuComponent implements OnInit {
         var a = false;
         res[0].tabList.forEach((x)=>{
           if(this.tabChargeCode === x.name){
+            this.orderService.setTab(x.name);
             this.tabPin = x.pin
             a = true;
           }

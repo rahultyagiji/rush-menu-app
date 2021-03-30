@@ -9,11 +9,11 @@
   </div>
 <!--</div>-->
    <img [src]="imgSrc"
-        style="height:200px;width: 100vw" *ngIf="showimage">
+        style="width: 100vw" *ngIf="showimage">
 
   <div *ngIf="isPinProvided">
 
-  <div style="line-height: 30px;width: 100%;height: 30px;left: 0px;background: #422039;" >
+  <div style="width: 100%;height: 30%;left: 0px;background: #422039;" >
     <span style="margin-left: 3%;margin-top: 5px;color: white;font-size: 18px;font-weight: bold"> {{vtext | titlecase}}</span>
     <i-bs name="filter" style="color: white;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="clickFilter()"></i-bs>
   </div>

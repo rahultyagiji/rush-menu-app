@@ -16,6 +16,7 @@ export class OrderService {
   order: Order[] = [];
   tableNumber: string = "";
   isPinProvided:boolean=false;
+  tabChargCode:string=''
 
   private _order = new BehaviorSubject<Order[]>([]);
 
@@ -157,6 +158,15 @@ export class OrderService {
   {
     return   this.tableNumber
   }
+
+  setTab(a){
+    this.tabChargCode = a;
+  }
+
+  getTab(){
+   return this.tabChargCode
+  }
+
 
   setPin(a){
   this.isPinProvided = a;
