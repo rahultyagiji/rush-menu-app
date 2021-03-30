@@ -95,7 +95,7 @@ export class MenuComponent implements OnInit {
         this.orderService.setTableNumber(params['loc'])
 
         if(typeof params['loc'] != 'undefined') {
-            this.tabChargeCode = params['loc'].substring(0, 3)
+            this.tabChargeCode = params['loc']
         }
         else {
           this.isPinProvided = true;

@@ -70,7 +70,7 @@ export class ComponentsmodalMenuComponent implements OnInit {
   addItem(){
     if(typeof this.menu.option !='undefined') {
       if (this.menu.option.length > 0) {
-          if (this.optionText!=''){
+          if (this.optionText != ''){
             this.closeModal('1');
             this.toastr.success('item added','',{
               positionClass: 'toast-center-center',
