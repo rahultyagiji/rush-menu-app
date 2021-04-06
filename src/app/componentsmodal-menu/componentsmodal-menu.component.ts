@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import {Component, OnInit, Inject, NgZone} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MenuDisplay} from '../datatypes/menu';
 import {ToastrService} from 'ngx-toastr';
@@ -25,7 +25,8 @@ export class ComponentsmodalMenuComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ComponentsmodalMenuComponent>,
     @Inject(MAT_DIALOG_DATA) private modalData: any,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit(): void {
@@ -44,10 +45,10 @@ export class ComponentsmodalMenuComponent implements OnInit {
   }
 
   closeModal(a:string) {
-    if(a!='0'){
+    if(a!='0') {
 
-      for(var i=0; i<this.extras.length;i++) {
-        if(this.extras[i].selected){
+      for (var i = 0; i < this.extras.length; i++) {
+        if (this.extras[i].selected) {
           this.extrasAdded.push({
             text: this.extras[i].name,
             price: this.extras[i].extraPrice
@@ -56,16 +57,23 @@ export class ComponentsmodalMenuComponent implements OnInit {
       }
 
 
-    this.dialogRef.close({
-      order:a,
-      specialInstruction: this.vSpecialInstructions,
-      option: { text: this.optionText, price: this.optionPrice },
-      extras: this.extrasAdded,
+      this.ngZone.run(() => {
+        this.dialogRef.close({
+          order: a,
+          specialInstruction: this.vSpecialInstructions,
+          option: {text: this.optionText, price: this.optionPrice},
+          extras: this.extrasAdded,
 
-    });}
-    else{
-      this.dialogRef.close({order:a})
+        });
+
+      })
     }
+    else{
+        this.ngZone.run(() => {
+        this.dialogRef.close({order:a})
+        })
+      }
+
   }
   addItem(){
     if(typeof this.menu.option !='undefined') {

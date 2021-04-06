@@ -43,6 +43,7 @@
 
 
 .evenStyle{
+  margin-top: 20px;
   width: 90%;
   margin-left: 5%;
   border-radius: 5px;
@@ -54,6 +55,8 @@
   margin-left: 5%;
   background: #F2F2F0;
   border-radius: 5px;
+  padding-top: 20px;
+  padding-bottom: 10px;
 }
 
 /* The Modal (background) */

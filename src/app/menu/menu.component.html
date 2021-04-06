@@ -9,7 +9,7 @@
   </div>
 <!--</div>-->
    <img [src]="imgSrc"
-        style="width: 100vw" *ngIf="showimage">
+        style="width: 100vw" >
 
   <div *ngIf="isPinProvided">
 
@@ -73,20 +73,22 @@
       <div  class="{{ i%2==0 ? 'evenStyle' : 'oddStyle' }}">
 
         <div (click)="openModal(i)">
-        <div style=" margin-left: 5px;font-weight: bold;font-size: 18px;display: inline-block;width: 75%;overflow: hidden;text-overflow: ellipsis" class=" {{menu.available ? '' : 'line-through'}}" (click)="openModal(i)">
+        <div style=" vertical-align: top;margin-left: 5px;font-weight: bold;font-size: 16px;display: inline-block;width:65%;overflow: hidden;text-overflow: ellipsis" class=" {{menu.available ? '' : 'line-through'}}" (click)="openModal(i)">
           <span > {{menu.name | titlecase}}</span>
           <br/>
         </div>
-          <p style="display: inline-block;width: 20%" (click)="openModal(i)">{{menu.price | currency:cafeInfo.currency:'symbol'}}</p>
+          <div style="display: inline-block;width: 20%;margin-left: 7%;vertical-align: top">
+          <span  style="" (click)="openModal(i)">{{menu.price | currency:cafeInfo.currency:'symbol'}}</span>
+          </div>
         </div>
 
-        <div style=" margin-left: 5px;width:50%;font-weight: bold;font-size: 14px" (click)="openModal(i)">
+        <div style=" margin-left: 5px;width:50%;font-size: 14px" (click)="openModal(i)">
           <span > {{menu.category | titlecase}}</span>
           <br/>
         </div>
 
 
-        <div style=" margin-left: 5px;width:80%;font-size: 14px" *ngIf="menu.description" (click)="openModal(i)">
+        <div style=" margin-left: 5px;width:80%;font-size: 14px;margin-top: 10px"  (click)="openModal(i)">
           <br/>
           <span >  {{menu.description | titlecase }}</span>
 

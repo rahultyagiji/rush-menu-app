@@ -139,10 +139,11 @@ export class MenuComponent implements OnInit {
             a = true;
           }
         })
-        if(!a){
-          this.isPinProvided = true;
-        }
-
+        setTimeout(()=>{
+          if(!a){
+            this.isPinProvided = true;
+          }
+        },1000)
 
       }
       else{
