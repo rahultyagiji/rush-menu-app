@@ -280,7 +280,7 @@ export class MenuComponent implements OnInit {
   // }
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true;
+    dialogConfig.disableClose = false;
     dialogConfig.id = '';
     dialogConfig.backdropClass = 'class-backdrop';
     dialogConfig.width = '100vw';
@@ -297,8 +297,9 @@ export class MenuComponent implements OnInit {
     }
     const modalDialog = this.matDialog.open(ComponentsmodalMenuComponent, dialogConfig)
 
-    modalDialog.beforeClosed().subscribe(result => {
-      if(result.order=='1'){
+    modalDialog.afterClosed().subscribe(result => {
+      if (typeof  result !== 'undefined')
+      {if(result.order=='1'){
         this.cart.push(this.menuDisplay[i])
         //remember to fix quantity later....
         this.orderService.Order(this.menuDisplay[i], this.cafe, result.specialInstruction, result.option, result.extras, 1, false);
@@ -315,8 +316,9 @@ export class MenuComponent implements OnInit {
           orderCount = orderCount + this.order[i].quantity;
         }
         this.itemCount = orderCount;
-      }
+      }}
     });
+
   }
 
   onClickCart(){

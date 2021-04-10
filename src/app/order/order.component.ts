@@ -73,6 +73,7 @@ export class OrderComponent implements OnInit {
   deliveryDetails: { "deliveryAddress": string, "deliveryPhone": string } = { deliveryAddress: "", deliveryPhone: "" }
   paymentModal:boolean=false;
   showSpinner:boolean=false;
+  showBottomButtons:boolean=true;
 
   constructor(
     public orderService: OrderService,
@@ -180,7 +181,11 @@ export class OrderComponent implements OnInit {
   };
 
   confirmCashOrder() {
+
+
+
     if(this.vtableNumber!='' || this.vTabChargeCode != ''){
+      this.showBottomButtons=false;
       //for specific link orders whether tab or others like table
       var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, this.vTabChargeCode);
 
@@ -199,6 +204,7 @@ export class OrderComponent implements OnInit {
     }
     else {
       if (this.deliveryDetails.deliveryPhone.match(/^\D*0(\D*\d){9}\D*$/)) {
+        this.showBottomButtons=false;
         // if (!this.uid && this.order.length != 0) { if (this.guestUser) { this.uid = this.auth.getDeviceIdHash() } }
         var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, this.grandTotal, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, "");
 
@@ -270,6 +276,7 @@ export class OrderComponent implements OnInit {
                 this.showSpinner=false;
                 if(res.statusCode ==200)
                 {
+                  this.showBottomButtons=false;
                   var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, 0, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, this.vTabChargeCode);
                   setTimeout(() => {
                     this.zeroQuantityReturn = true;

@@ -2,7 +2,7 @@
 <div  style="color: #422039" >
 
   <div class="topBox">
-    <i-bs name="cart-fill" class="cart vibrateAnimation" style=";width: 15%;color: #7AAD0A" *ngIf="ifOrderFound"
+    <i-bs name="cart-fill" class="cart vibrateAnimation" style=";width: 5%;color: #7AAD0A" *ngIf="ifOrderFound"
           (click)="viewOrderDetails()"></i-bs>
     <span class="cafeName" style="text-transform: capitalize;width:80%">{{ cafeName }}</span>
     <br/>
@@ -13,9 +13,9 @@
 
   <div *ngIf="isPinProvided">
 
-  <div style="width: 100%;height: 30%;left: 0px;background: #422039;" >
+  <div style="width: 100%;height: 5vh;left: 0px;background: #422039;" >
     <span style="margin-left: 3%;margin-top: 5px;color: white;font-size: 18px;font-weight: bold"> {{vtext | titlecase}}</span>
-    <i-bs name="filter" style="color: white;float: right;margin-right: 10px;font-size: 22px;cursor: pointer" (click)="clickFilter()"></i-bs>
+    <i-bs name="filter" style="color: white;float: right;margin-right: 10px;font-size: 30px;cursor: pointer" (click)="clickFilter()"></i-bs>
   </div>
 
   <!-- The Modal -->
@@ -82,7 +82,7 @@
           </div>
         </div>
 
-        <div style=" margin-left: 5px;width:50%;font-size: 14px" (click)="openModal(i)">
+        <div style=" margin-left: 5px;width:50%;font-size: 14px;margin-top: 10px" (click)="openModal(i)">
           <span > {{menu.category | titlecase}}</span>
           <br/>
         </div>

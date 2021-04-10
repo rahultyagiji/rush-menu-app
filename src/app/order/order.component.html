@@ -9,12 +9,11 @@
     <div style="height:150px;overflow-y: scroll">
       <div *ngFor="let ord of order;let i = index">
         <div style="height: 40px">
-        <p style="display: inline-block;width: 5%;padding-left: 10px"> {{ord.quantity}}</p>
-        <p style="display: inline-block;width: 50%;padding-left: 10px">{{ord.name | titlecase}}</p>
-        <p style="display: inline-block;width: 10%;padding-left: 10px">{{ord.priceQuantity| currency: cafeInfo.currency :'symbol-narrow'}}</p>
-        <p style="display: inline-block;width: 15%;text-align: right;font-size: 30px;color: #E12842" (click)="decreaseQuantity(ord,i)">-</p>
-
-      </div>
+        <p style="display: inline-block;width: 5%;padding-left: 10px;vertical-align: top"> {{ord.quantity}}</p>
+        <p style="display: inline-block;width: 50%;padding-left: 10px;vertical-align: top">{{ord.name | titlecase}}</p>
+        <p style="display: inline-block;width: 10%;padding-left: 10px;vertical-align: top">{{ord.priceQuantity| currency: cafeInfo.currency :'symbol-narrow'}}</p>
+          <i-bs name="dash" style="display: inline-block;width: 15%;text-align: right;color: #E12842;margin-top: 10px;font-weight: bold;font-size: 22px" (click)="decreaseQuantity(ord,i)"></i-bs>
+        </div>
       <br>
 
       <p style="padding-left: 40px;margin-top: 5px">{{ord.specialInstruction | titlecase}}</p>
@@ -94,15 +93,15 @@
   <div class="md-form" style="top: 370px;position: fixed;width: 100%;overflow-y: scroll" *ngIf="vTabChargeCode===''">
   <p style="display: inline-block;width:34%;margin-left: 2%;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
                                 text-align: left;font-weight: bold;">Order For</p>
-  <input mdbInput placeholder="Table Number/ Name ..." type="text" style="font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
-                                text-align: left;font-weight: bold;padding-left: 3%;display: inline-block;height: 40px;width: 55%;margin-left: 1%;border-radius: 10px" name="
-" [(ngModel)]="vtableNumber" id="form1" class="form-control">
+    <p name="" style="font-family: Roboto;font-style: normal;font-size: 20px;line-height: normal;
+                                text-align: left;font-weight: bold;padding-left: 3%;display: inline-block;height: 40px;width: 45%;margin-left: 1%;border-radius: 10px">{{vtableNumber}}</p>
+
 
     <!--    <label for="form1" class="">Enter Table Number</label>-->
     <div *ngIf="isPhoneRequired" style="margin-top: 5px">
       <p style="display: inline-block;width:34%;margin-left: 2%;font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
                                 text-align: left;font-weight: bold;">Phone number</p>
-           <input mdbInput placeholder="04 XXX XXXXX" type="text" style="font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
+           <input mdbInput placeholder="xx XXX XXXXX" type="text" style="font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;
                                 text-align: left;font-weight: bold;padding-left: 3%;display: inline-block;height: 40px;width: 55%;margin-left: 1%;border-radius: 10px" name="
                                 " [(ngModel)]=" deliveryDetails.deliveryPhone" id="form1" class="form-control">
 
@@ -114,16 +113,12 @@
                                 text-align: left;font-weight: bold;"> Tab Charge Code:</p>
     <p name="" style="font-family: Roboto;font-style: normal;font-size: 20px;line-height: normal;
                                 text-align: left;font-weight: bold;padding-left: 3%;display: inline-block;height: 40px;width: 45%;margin-left: 1%;border-radius: 10px">{{vtableNumber}}</p>
-<!--    <input mdbInput placeholder="Enter Tab Code" type="text" style="font-family: Roboto;font-style: normal;font-size: 12px;line-height: normal;-->
-<!--                                text-align: left;font-weight: bold;padding-left: 3%;display: inline-block;height: 40px;width: 45%;margin-left: 1%;border-radius: 10px" name="-->
-<!--" [(ngModel)]="vtableNumber" id="form1" class="form-control">-->
-    <!--    <label for="form1" class="">Enter Table Number</label>-->
 
   </div>
 
 
 
-
+<div *ngIf="showBottomButtons">
   <div class="footer" style="text-align: center;width: 100%" *ngIf="isCashAllowed && !isCardAllowed">
     <p style="line-height: 30px;" (click)="confirmCashOrder()">Confirm & Pay Later</p>
   </div>
@@ -141,7 +136,7 @@
     <p style="line-height: 30px;width: 100%;display: inline-block" (click)="confirmCardOrder()">Pay Now & Confirm</p>
   </div>
   </div>
-
+</div>
 
   <!-- The Modal -->
   <div id="myModal" class="modal" *ngIf="paymentModal" >
