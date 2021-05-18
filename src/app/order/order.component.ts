@@ -277,7 +277,7 @@ export class OrderComponent implements OnInit {
                 if(res.statusCode ==200)
                 {
                   this.showBottomButtons=false;
-                  var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Cash", "guestId", this.vtableNumber, this.grandTotal, 0, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, this.vTabChargeCode);
+                  var a = this.orderService.confirmOrder(this.order, this.cafeInfo.cafeId, "Card", "guestId", this.vtableNumber, this.grandTotal, 0, this.cafeInfo.discount, this.cafeInfo.currency, "0", this.tipAmount, this.additiveTax, this.inclusiveTax, this.deliveryDetails, this.vTabChargeCode);
                   setTimeout(() => {
                     this.zeroQuantityReturn = true;
                     this.order.length = 0;

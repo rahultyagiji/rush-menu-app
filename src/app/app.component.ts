@@ -10,7 +10,7 @@ import {ConfigService} from './config.service';
 })
 export class AppComponent implements OnInit{
   public title:string  = '';
-
+  public showSearch:boolean = false;
   public cafeId:string="";
 
   constructor(private router:Router,
@@ -18,6 +18,9 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.configService.setConfig();
+    if (this.router.url=='/'){
+      this.showSearch = true;
+    }
   }
 
 

@@ -90,6 +90,7 @@ export class MenuComponent implements OnInit {
 
     this.route.params.subscribe(
       params => {
+
         this.cafe = params['id'];
         this.tableNum = params['loc'];
         this.orderService.setTableNumber(params['loc'])
@@ -110,7 +111,6 @@ export class MenuComponent implements OnInit {
   imgSrc:string=""
 
   ngOnInit() {
-
     this.width = window.innerWidth
     this.height = window.innerHeight
     this.isMobile = window.innerWidth < this.mobileWidth;
@@ -293,7 +293,8 @@ export class MenuComponent implements OnInit {
     dialogConfig.data = {
       menu:this.menuDisplay[i],
       isOnboarded:this.cafeInfo.onboarded,
-      isAvailable:this.cafeInfo.available
+      isAvailable:this.cafeInfo.available,
+      curr: this.cafeInfo.currency
     }
     const modalDialog = this.matDialog.open(ComponentsmodalMenuComponent, dialogConfig)
 

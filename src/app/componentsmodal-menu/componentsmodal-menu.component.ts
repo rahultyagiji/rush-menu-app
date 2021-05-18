@@ -12,6 +12,7 @@ import {ToastrService} from 'ngx-toastr';
 export class ComponentsmodalMenuComponent implements OnInit {
 
   menu:MenuDisplay;
+  currency:string=""
   isOnboarded:boolean;
   isCafeAvailable:boolean;
   vSpecialInstructions:string="";
@@ -33,6 +34,7 @@ export class ComponentsmodalMenuComponent implements OnInit {
     this.menu=this.modalData.menu
     this.isOnboarded=this.modalData.isOnboarded
     this.isCafeAvailable = this.modalData.isAvailable
+    this.currency = this.modalData.curr
 
 
     if(typeof this.menu.extra!='undefined')

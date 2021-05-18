@@ -89,7 +89,7 @@ export class OrderService {
       var a = this.orderNo();
       // var dId = this.auth.getDeviceIdHash();
 
-      if (payway == "Cash") {
+      // if (payway == "Cash") {
 
         this.fb.list('/order-cafe/' + cafe).push(
           {
@@ -102,7 +102,7 @@ export class OrderService {
             "timestamp": time,
             "totalPrice": totalPrice,
             "paymentBalance": paymentBalance,
-            "payway": "Cash",
+            "payway": payway,
             "discount": discount,
             "currency": curr,
             "arrivalTime": arrival,
@@ -135,7 +135,7 @@ export class OrderService {
             });
   })
       }
-    }
+    // }
   }
 
   orderNo() {

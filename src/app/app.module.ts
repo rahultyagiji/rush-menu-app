@@ -27,6 +27,7 @@ import { ToastrModule } from 'ngx-toastr';
 import {NgxStripeModule} from 'ngx-stripe';
 import {ConfigService} from './config.service';
 import {HttpClientModule} from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
 const icons = {
   Alarm,
   Filter,
@@ -43,7 +44,8 @@ const icons = {
     AppComponent,
     MenuComponent,
     ComponentsmodalMenuComponent,
-    OrderComponent],
+    OrderComponent,
+    HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

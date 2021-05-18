@@ -1,0 +1,30 @@
+<div style="height: 100%;">
+
+
+  <div class="topBox">
+    <span class="headerText" style="text-transform: capitalize;width:100%;font-size: calc(1.3rem + 1.6vw)">Pizza Anywhere</span>
+
+  </div>
+  <br/>
+  <br/>
+  <br/>
+
+  <input mdbInput placeholder="Find your favourite local pizzeria" type="text" style="font-size: calc(1.3rem + 1vw);height: 40px;width: 100%;border-radius: 10px;margin-top: 5%" name="vSearchText" [(ngModel)]="vSearchText" id="form1" class="form-control"
+         (ngModelChange)="searchItems()">
+
+  <div *ngFor="let item of itemDisplay">
+    <div style="height: 100px">
+    <div class="container2" (click)="navigateToMenu(item)">
+      <br/>
+      <div>
+      <img [src]="item.imgSrc" class="iconDetails">
+      </div>
+      <div style="margin-left: 10px">
+      <h4 style="display: inline-block;font-size: calc(1.3rem);margin-left: 5%;width:60%;text-overflow: ellipsis;margin-top: 5px">{{item.name}}</h4>
+      </div>
+    <br/>
+    </div>
+    </div>
+  </div>
+
+</div>

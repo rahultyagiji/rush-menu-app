@@ -4,6 +4,7 @@ import {MenuComponent} from './menu/menu.component';
 import {AppComponent} from './app.component';
 import {ComponentsmodalMenuComponent} from './componentsmodal-menu/componentsmodal-menu.component';
 import {OrderComponent} from './order/order.component';
+import {HomeComponent} from './home/home.component';
 
 const routes: Routes = [
   {
@@ -12,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: "",
-    component: AppComponent
+    component: HomeComponent
   },
   {
     path: 'menu/:id',
